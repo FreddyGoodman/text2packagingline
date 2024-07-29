@@ -1,0 +1,48 @@
+{
+    "types": {
+        "PackagingLine": {
+            "description": "A class that represents a packaging line.",
+            "properties": {
+                "SubMachines": {
+                    "description": "Array of packaging machines in the packaging line.",
+                    "type": "Array<SubMachines>"
+                },
+                "ConveyerBelts": {
+                    "description": "Array of conveyer belts in the packaging line.",
+                    "type": "Array<ConveyerBelt>"
+                }
+            }
+        },
+        "SubMachine": {
+            "description": "A class that represents a sub-machine in a packaging line.",
+            "properties": {
+                "PackagingRobots": {
+                    "description": "Array of packaging machines in the sub-machine.",
+                    "type": "Array<PackagingRobot>"
+                }
+            }
+        },
+        "PackagingRobot": {
+            "description": "A class that represents a packaging robot in a sub-machine.",
+            "properties": {
+                "type": {
+                    "description": "Type of the packaging machine.",
+                    "type": "string"
+                }
+            }
+        },
+        "ConveyerBelt": {
+            "description": "A class that represents a conveyer belt in a packaging line.",
+            "properties": {
+                "beginning": {
+                    "description": "Index of the first sub-machine the conveyer belt is connected to.",
+                    "type": "number"
+                },
+                "end": {
+                    "description": "Index of the last sub-machine the conveyer belt is connected to.",
+                    "type": "number"
+                }
+            }
+        }
+    }
+}
