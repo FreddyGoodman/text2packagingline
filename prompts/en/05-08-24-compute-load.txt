@@ -1,0 +1,7 @@
+Given the functions:
+[functions]
+
+and the types:
+[types]
+
+Write a python script that uses the given function and types that instanciates a PackagingLine with enough capacity to package all cookies. There is a total 400 cookies arraving at the machine. One funnel can deliver 100 cookies. The cookies can be picked up by a "picker" but only if the converyer belt was previously scanned by a "scanner". The PackagingLine is supposed to place a cookies in one tray, which needs to move through the machine too. Use the minimal amount of machines necessary.

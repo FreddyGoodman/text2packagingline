@@ -1,0 +1,7 @@
+Gegeben seien folgende Funktionen:
+[functions]
+
+Gegeben seien folgende Typen:
+[types]
+
+Schreibe ein Programm das eine Verpackungsstraße mit vier Teilmaschienen instantiiert und ein Fließband von Maschine zwei bis sieben hinzufügt. Die erste Teilmaschiene soll einen Scanner bekommmen.

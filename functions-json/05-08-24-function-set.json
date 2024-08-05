@@ -1,0 +1,56 @@
+{
+    "functions": [
+        {
+            "name": "create_packaging_line",
+            "description": "Creates a new instance of a packaging line.",
+            "arguments": [
+                {
+                    "name": "n",
+                    "description": "Amount of sub-machines to add to the packaging line.",
+                    "type": "number"
+                }
+            ],
+            "returns": {
+                "description": "Instance of the packaging line.",
+                "type": "PackagingLine"
+            }
+        },
+        {
+            "name": "add_conveyer_belt",
+            "description": "This method of the PackagingLine type adds a conveyer belt to the packaging line. The converybelt runs through the machines, giving all machines access to the contents of the conveyer belt. Sub-machines are zero-index from left to right.",
+            "arguments": [
+                {
+                    "name": "beginning",
+                    "description": "Index of the first sub-machine to connect the conveyer belt to.",
+                    "type": "number"
+                },
+                {
+                    "name": "end",
+                    "description": "Index of the last sub-machine to connect the conveyer belt to.",
+                    "type": "number"
+                }
+            ],
+            "returns": {
+                "description": "The result of subtracting the second number from the first.",
+                "type": "number"
+            }
+        },
+        {
+            "name": "add_packaging_robot",
+            "description": "This method of the SubMachine type adds a packaging robot to the sub-machine.",
+            "arguments": [
+                {
+                    "name": "machine_type",
+                    "description": "Type of the packaging machine to add.",
+                    "type": "string"
+                }
+            ],
+            "returns": "void"
+        },
+        {
+            "name": "attach_funnel",
+            "description": "This method of the SubMachine type attaches a funnel to the sub-machine. The method checks if a funnel is already attached to the sub-machine. If a funnel is already attached, the mothod returns false, otherwise true.",
+            "returns": "bool"
+        }
+    ]
+}
