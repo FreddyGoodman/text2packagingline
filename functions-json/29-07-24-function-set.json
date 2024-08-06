@@ -16,17 +16,17 @@
             }
         },
         {
-            "name": "add_conveyer_belt",
-            "description": "This method of the PackagingLine class adds a conveyer belt to the packaging line. Sub-machines are zero-index from left to right.",
+            "name": "add_conveyor_belt",
+            "description": "This method of the PackagingLine class adds a conveyor belt to the packaging line. Sub-machines are zero-index from left to right.",
             "arguments": [
                 {
                     "name": "beginning",
-                    "description": "Index of the first sub-machine to connect the conveyer belt to.",
+                    "description": "Index of the first sub-machine to connect the conveyor belt to.",
                     "type": "number"
                 },
                 {
                     "name": "end",
-                    "description": "Index of the last sub-machine to connect the conveyer belt to.",
+                    "description": "Index of the last sub-machine to connect the conveyor belt to.",
                     "type": "number"
                 }
             ],

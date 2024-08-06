@@ -7,9 +7,9 @@
                     "description": "Array of packaging machines in the packaging line.",
                     "type": "Array<SubMachines>"
                 },
-                "ConveyerBelts": {
-                    "description": "Array of conveyer belts in the packaging line.",
-                    "type": "Array<ConveyerBelt>"
+                "ConveyorBelts": {
+                    "description": "Array of conveyor belts in the packaging line.",
+                    "type": "Array<ConveyorBelt>"
                 }
             }
         },
@@ -35,15 +35,15 @@
                 }
             }
         },
-        "ConveyerBelt": {
-            "description": "A class that represents a conveyer belt in a packaging line.",
+        "ConveyorBelt": {
+            "description": "A class that represents a conveyor belt in a packaging line.",
             "properties": {
                 "beginning": {
-                    "description": "Index of the first sub-machine the conveyer belt is connected to.",
+                    "description": "Index of the first sub-machine the conveyor belt is connected to.",
                     "type": "number"
                 },
                 "end": {
-                    "description": "Index of the last sub-machine the conveyer belt is connected to.",
+                    "description": "Index of the last sub-machine the conveyor belt is connected to.",
                     "type": "number"
                 }
             }

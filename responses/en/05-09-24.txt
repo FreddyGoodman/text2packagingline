@@ -1,9 +1,9 @@
 Plan
 Create a PackagingLine instance with the necessary number of sub-machines.
 Attach funnels to the sub-machines to handle the 400 cookies (each funnel handles 100 cookies).
-Add conveyer belts to connect the sub-machines.
+Add conveyor belts to connect the sub-machines.
 Add packaging robots to the sub-machines to handle the cookies.
-Ensure the conveyer belt is scanned before the picker can pick up the cookies.
+Ensure the conveyor belt is scanned before the picker can pick up the cookies.
 
 Python Script
-This script sets up a packaging line with 4 sub-machines, each equipped with a funnel, a scanner, and a picker. The conveyer belt connects all sub-machines, ensuring that the cookies can be processed efficiently.
+This script sets up a packaging line with 4 sub-machines, each equipped with a funnel, a scanner, and a picker. The conveyor belt connects all sub-machines, ensuring that the cookies can be processed efficiently.

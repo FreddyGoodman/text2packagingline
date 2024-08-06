@@ -1,10 +1,10 @@
 class PackagingLine:
     def __init__(self, n):
         self.SubMachines = [SubMachine() for _ in range(n)]
-        self.ConveyerBelts = []
+        self.ConveyorBelts = []
 
-    def add_conveyer_belt(self, beginning, end):
-        self.ConveyerBelts.append(ConveyerBelt(beginning, end))
+    def add_conveyor_belt(self, beginning, end):
+        self.ConveyorBelts.append(ConveyorBelt(beginning, end))
 
 class SubMachine:
     def __init__(self):
@@ -24,7 +24,7 @@ class PackagingRobot:
     def __init__(self, machine_type):
         self.type = machine_type
 
-class ConveyerBelt:
+class ConveyorBelt:
     def __init__(self, beginning, end):
         self.beginning = beginning
         self.end = end
@@ -36,8 +36,8 @@ packaging_line = PackagingLine(4)
 for sub_machine in packaging_line.SubMachines:
     sub_machine.attach_funnel()
 
-# Step 3: Add a conveyer belt that connects all sub-machines
-packaging_line.add_conveyer_belt(0, 3)
+# Step 3: Add a conveyor belt that connects all sub-machines
+packaging_line.add_conveyor_belt(0, 3)
 
 # Step 4: Add packaging robots to each sub-machine
 for sub_machine in packaging_line.SubMachines:

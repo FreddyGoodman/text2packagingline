@@ -17,17 +17,17 @@ Given the functions:
             }
         },
         {
-            "name": "add_conveyer_belt",
-            "description": "This method of the PackagingLine type adds a conveyer belt to the packaging line. The convery belt runs through the machines, giving all machines access to the contents of the conveyer belt. Sub-machines are zero-index from left to right.",
+            "name": "add_conveyor_belt",
+            "description": "This method of the PackagingLine type adds a conveyor belt to the packaging line. The convery belt runs through the machines, giving all machines access to the contents of the conveyor belt. Sub-machines are zero-index from left to right.",
             "arguments": [
                 {
                     "name": "beginning",
-                    "description": "Index of the first sub-machine to connect the conveyer belt to.",
+                    "description": "Index of the first sub-machine to connect the conveyor belt to.",
                     "type": "number"
                 },
                 {
                     "name": "end",
-                    "description": "Index of the last sub-machine to connect the conveyer belt to.",
+                    "description": "Index of the last sub-machine to connect the conveyor belt to.",
                     "type": "number"
                 }
             ],
@@ -66,9 +66,9 @@ and the types:
                     "description": "Array of packaging machines in the packaging line.",
                     "type": "Array<SubMachines>"
                 },
-                "ConveyerBelts": {
-                    "description": "Array of conveyer belts in the packaging line.",
-                    "type": "Array<ConveyerBelt>"
+                "ConveyorBelts": {
+                    "description": "Array of conveyor belts in the packaging line.",
+                    "type": "Array<ConveyorBelt>"
                 }
             }
         },
@@ -94,15 +94,15 @@ and the types:
                 }
             }
         },
-        "ConveyerBelt": {
-            "description": "A class that represents a conveyer belt in a packaging line.",
+        "ConveyorBelt": {
+            "description": "A class that represents a conveyor belt in a packaging line.",
             "properties": {
                 "beginning": {
-                    "description": "Index of the first sub-machine the conveyer belt is connected to.",
+                    "description": "Index of the first sub-machine the conveyor belt is connected to.",
                     "type": "number"
                 },
                 "end": {
-                    "description": "Index of the last sub-machine the conveyer belt is connected to.",
+                    "description": "Index of the last sub-machine the conveyor belt is connected to.",
                     "type": "number"
                 }
             }
