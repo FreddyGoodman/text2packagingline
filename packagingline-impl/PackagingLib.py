@@ -13,4 +13,7 @@ class PackagingLine:
     def add_conveyor_belt(self, beginning: int, end: int) -> None:
         assert 0 <= beginning < len(self.SubMachines)
         assert beginning <= end < len(self.SubMachines)
+        for SubMachine in self.SubMachines[beginning:end]:
+            assert SubMachine.BeltSlots > 0
+            SubMachine.BeltSlots += -1
         self.ConveyorBelts.append(ConveyorBelt(beginning, end))
