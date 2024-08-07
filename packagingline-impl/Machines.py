@@ -13,27 +13,28 @@ class ConveyorBelt:
 
 
 class PackagingRobot:
+    machine_type: str
     def __init__(self, machine_type: str) -> None:
         self.type = machine_type
 
 
 class SubMachine:
-    Funnel: bool
-    PackagingRobots: List[PackagingRobot]
-    RobotSlots: int
-    BeltSlots: int
+    funnel: bool
+    packaging_robots: List[PackagingRobot]
+    robot_slots: int
+    belt_slots: int
 
     def __init__(self) -> None:
-        self.PackagingRobots = []
-        self.Funnel = False
-        self.RobotSlots = 4
-        self.BeltSlots = 3
+        self.packaging_robots = []
+        self.funnel = False
+        self.robot_slots = 4
+        self.belt_slots = 3
 
     def add_packaging_robot(self, machine_type: str) -> None:
-        assert self.RobotSlots > 0
-        self.PackagingRobots.append(PackagingRobot(machine_type))
-        self.RobotSlots += -1
+        assert self.robot_slots > 0
+        self.packaging_robots.append(PackagingRobot(machine_type))
+        self.robot_slots += -1
 
     def attach_funnel(self) -> None:
-        assert self.Funnel == False
-        self.Funnel = True
+        assert self.funnel == False
+        self.funnel = True

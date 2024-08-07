@@ -3,12 +3,12 @@ from Machines import SubMachine, ConveyorBelt, PackagingRobot
 
 
 class PackagingLine:
-    ConveyorBelts: List[ConveyorBelt]
-    SubMachines: List[SubMachine]
+    conveyor_belts: List[ConveyorBelt]
+    submachines: List[SubMachine]
 
     def __init__(self, n: int) -> None:
-        self.SubMachines = [SubMachine() for _ in range(n)]
-        self.ConveyorBelts = []
+        self.submachines = [SubMachine() for _ in range(n)]
+        self.conveyor_belts = []
 
     def add_conveyor_belt(self, beginning: int, end: int, type: str) -> None:
         assert 0 <= beginning < len(self.submachines)
