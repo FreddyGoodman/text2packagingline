@@ -2,9 +2,14 @@ from typing import List
 
 
 class ConveyorBelt:
-    def __init__(self, beginning: int, end: int) -> None:
+    beginning: int
+    end: int
+    type: str
+
+    def __init__(self, beginning: int, end: int, type: str) -> None:
         self.beginning = beginning
         self.end = end
+        self.type = type
 
 
 class PackagingRobot:

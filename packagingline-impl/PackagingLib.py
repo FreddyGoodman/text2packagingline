@@ -10,10 +10,11 @@ class PackagingLine:
         self.SubMachines = [SubMachine() for _ in range(n)]
         self.ConveyorBelts = []
 
-    def add_conveyor_belt(self, beginning: int, end: int) -> None:
-        assert 0 <= beginning < len(self.SubMachines)
-        assert beginning <= end < len(self.SubMachines)
-        for SubMachine in self.SubMachines[beginning:end]:
-            assert SubMachine.BeltSlots > 0
-            SubMachine.BeltSlots += -1
-        self.ConveyorBelts.append(ConveyorBelt(beginning, end))
+    def add_conveyor_belt(self, beginning: int, end: int, type: str) -> None:
+        assert 0 <= beginning < len(self.submachines)
+        assert beginning <= end < len(self.submachines)
+        assert not beginning == end
+        for SubMachine in self.submachines[beginning:end]:
+            assert SubMachine.belt_slots > 0
+            SubMachine.belt_slots += -1
+        self.conveyor_belts.append(ConveyorBelt(beginning, end, type))
