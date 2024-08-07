@@ -1,6 +1,10 @@
 from typing import List
 from Machines import SubMachine, ConveyorBelt, PackagingRobot
 
+PICKER_CAPACITY = 25
+TRAY_CAPACITY = 50
+TRAY_PER_BELT = 4
+
 
 class PackagingLine:
     conveyor_belts: List[ConveyorBelt]
@@ -18,3 +22,20 @@ class PackagingLine:
             assert SubMachine.belt_slots > 0
             SubMachine.belt_slots += -1
         self.conveyor_belts.append(ConveyorBelt(beginning, end, type))
+
+    def compute_throughput(self, desired_throughput: int) -> float:
+        picker_capacity = []
+        for submachine in self.submachines:
+            capacity = 0
+            for robot in submachine.packaging_robots:
+                if robot.type == "picker":
+                    capacity += PICKER_CAPACITY
+            picker_capacity.append(capacity)
+
+        for conveyor_belt in self.conveyor_belts:
+            pass
+
+        # compute cookies per submachine
+        # count cookies on conveyor belts
+        # and accessible cookies
+        
