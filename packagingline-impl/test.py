@@ -1,28 +1,28 @@
 from PackagingLib import PackagingLine
 
-pl = PackagingLine(4)
+# Initialize the packaging line with a sufficient number of submachines
+packaging_line = PackagingLine(n=100)
 
-pl.add_conveyor_belt(0, 3, "item")
-pl.add_conveyor_belt(1, 3, "tray")
-
-
-pl.submachines[0].attach_funnel()
-
-pl.submachines[1].attach_funnel()
-
-pl.submachines[1].add_packaging_robot("scanner")
-pl.submachines[1].add_packaging_robot("picker")
-pl.submachines[1].add_packaging_robot("picker")
-pl.submachines[1].add_packaging_robot("picker")
-
-pl.submachines[2].add_packaging_robot("scanner")
-pl.submachines[2].add_packaging_robot("picker")
-pl.submachines[2].add_packaging_robot("picker")
-pl.submachines[2].add_packaging_robot("picker")
-
-pl.submachines[3].add_packaging_robot("picker")
-pl.submachines[3].add_packaging_robot("picker")
+# Add packaging robots to submachines
+for i in range(100):
+    packaging_line.submachines[i].add_packaging_robot("picker")
+    packaging_line.submachines[i].add_packaging_robot("picker")
+    packaging_line.submachines[i].add_packaging_robot("picker")
+    packaging_line.submachines[i].add_packaging_robot("scanner")
 
 
-print(pl.throughput_string())
-print(pl.cost_string())
+# Add conveyor belts to connect the submachines
+packaging_line.add_conveyor_belt(beginning=0, end=99, type="item")
+packaging_line.add_conveyor_belt(beginning=0, end=99, type="item")
+packaging_line.add_conveyor_belt(beginning=0, end=99, type="tray")
+
+packaging_line.submachines[0].attach_funnel()
+packaging_line.submachines[1].attach_funnel()
+packaging_line.submachines[2].attach_funnel()
+packaging_line.submachines[3].attach_funnel()
+
+
+# Check the throughput to ensure it can process at least 350 items
+throughput = packaging_line.compute_throughput()
+print(packaging_line.throughput_string())
+print(packaging_line.cost_string())
