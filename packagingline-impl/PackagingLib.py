@@ -24,6 +24,9 @@ class PackagingLine:
         self.conveyor_belts.append(ConveyorBelt(beginning, end, type))
 
     def compute_throughput(self) -> int:
+        # TODO: - Only count attached funnels once
+        #       - Maybe only allow no more than 100 items per submachine on a belt
+        #       - With the current test case, pickers are unused but some items are left unpicked
         picker_capacity = []
         for submachine in self.submachines:
             capacity = 0
@@ -70,6 +73,10 @@ class PackagingLine:
                     picked_items = min(
                         picker_capacity[i], item_belt_loads[j][i][0], remaining_slots
                     )
+
+                    for k in range(i, conveyor_belt.end + 1):
+                        item_belt_loads[j][k][0] -= picked_items
+
                     total_items_picked += picked_items
                     remaining_slots -= picked_items
                     picker_capacity[i] -= picked_items
@@ -79,12 +86,13 @@ class PackagingLine:
 
         return (
             tray_belts * TRAYS_PER_BELT - remaining_trays,
+            funnels * ITEMS_PER_FUNNEL,
             funnels * ITEMS_PER_FUNNEL - total_items_picked,
         )
 
     def throughput_string(self) -> str:
         data = self.compute_throughput()
-        return f"Throughput: {data[0]} trays filled and {data[1]} items remained unpicked"
+        return f"Throughput: {data[0]} trays filled and {data[2]} out of {data[1]} items remained unpicked"
 
     def compute_line_cost(self) -> int:
         cost = 1000
@@ -102,6 +110,6 @@ class PackagingLine:
             cost += 50
 
         return cost
-    
+
     def cost_string(self) -> str:
         return f"Cost: {self.compute_line_cost()}"
