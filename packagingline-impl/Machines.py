@@ -1,5 +1,8 @@
 from typing import List
 
+ROBOT_SLOTS = 4
+BELT_SLOTS = 3
+
 
 class ConveyorBelt:
     beginning: int
@@ -14,6 +17,7 @@ class ConveyorBelt:
 
 class PackagingRobot:
     machine_type: str
+
     def __init__(self, machine_type: str) -> None:
         self.type = machine_type
 
@@ -27,8 +31,8 @@ class SubMachine:
     def __init__(self) -> None:
         self.packaging_robots = []
         self.funnel = False
-        self.robot_slots = 4
-        self.belt_slots = 3
+        self.robot_slots = ROBOT_SLOTS
+        self.belt_slots = BELT_SLOTS
 
     def add_packaging_robot(self, machine_type: str) -> None:
         assert self.robot_slots > 0
