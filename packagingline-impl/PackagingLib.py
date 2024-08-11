@@ -3,7 +3,7 @@ from Machines import SubMachine, ConveyorBelt, PackagingRobot
 
 PICKER_CAPACITY = 25
 TRAY_CAPACITY = 50
-TRAYS_PER_BELT = 4
+TRAYS_PER_BELT = 20
 ITEMS_PER_FUNNEL = 100
 
 
@@ -24,9 +24,7 @@ class PackagingLine:
         self.conveyor_belts.append(ConveyorBelt(beginning, end, type))
 
     def compute_throughput(self) -> int:
-        # TODO: - Only count attached funnels once
         #       - Maybe only allow no more than 100 items per submachine on a belt
-        #       - With the current test case, pickers are unused but some items are left unpicked
         picker_capacity = []
         for submachine in self.submachines:
             capacity = 0
@@ -35,7 +33,40 @@ class PackagingLine:
                     capacity += PICKER_CAPACITY
             picker_capacity.append(capacity)
 
+        item_belts = 0
+        item_belts_at_submachnine = [0 for _ in range(len(self.submachines))]
+        tray_belts = 0
+        tray_belts_at_submachnine = [0 for _ in range(len(self.submachines))]
+
+        for conveyor_belt in self.conveyor_belts:
+            if conveyor_belt.type == "item":
+                for i in range(conveyor_belt.beginning, conveyor_belt.end + 1):
+                    item_belts_at_submachnine[i] += 1
+                item_belts += 1
+            elif conveyor_belt.type == "tray":
+                for i in range(conveyor_belt.beginning, conveyor_belt.end + 1):
+                    tray_belts_at_submachnine[i] += 1
+                tray_belts += 1
+
+        # calculates the load at all machines despite not every machine having a funnel attached
+        # doesnt really matter because load is only used when a funnel is attached at the machine
+        funnel_input_at_submachine = []
         funnels = 0
+        for i in range(len(self.submachines)):
+            if self.submachines[i].funnel:
+                funnels += 1
+            loads = []
+            total = ITEMS_PER_FUNNEL
+            fraction = ITEMS_PER_FUNNEL // item_belts_at_submachnine[i]
+            for j in range(item_belts_at_submachnine[i]):
+                if total <= fraction:
+                    loads.append(total)
+                    break
+                else:
+                    loads.append(fraction)
+                    total += -fraction
+            funnel_input_at_submachine.append(loads)
+
         item_belt_loads = []
         for conveyor_belt in self.conveyor_belts:
             if not conveyor_belt.type == "item":
@@ -53,13 +84,11 @@ class PackagingLine:
                         load[0] += belt_load[i - 1][1]  # add unscanned
                         load[1] = 0
                         break  # submachine can only scan once
-                if submachine.funnel:
-                    load[1] += ITEMS_PER_FUNNEL
-                    funnels += 1
+                if submachine.funnel: # every machine has load even if it doesnt have a funnel
+                    load[1] += funnel_input_at_submachine[i].pop()
                 belt_load[i] = load.copy()
             item_belt_loads.append(belt_load)
 
-        tray_belts = 0
         remaining_trays = 0
         total_items_picked = 0
         for conveyor_belt in self.conveyor_belts:
@@ -82,7 +111,6 @@ class PackagingLine:
                     picker_capacity[i] -= picked_items
 
             remaining_trays += float(remaining_slots) / TRAY_CAPACITY
-            tray_belts += 1
 
         return (
             tray_belts * TRAYS_PER_BELT - remaining_trays,
