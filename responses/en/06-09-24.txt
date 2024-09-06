@@ -1,0 +1,64 @@
+To write a Python script that creates a `PackagingLine` instance with enough capacity to package 400 items, we'll need to use the provided functions and types to design the packaging line. The line must have enough capacity and meet the specified constraints, including the use of both "pickers" and "scanners", and the need to place items in trays.
+
+Here's a breakdown of the steps we'll need to follow:
+
+1. **Calculate the Number of Items and Trays Needed:**
+   - Each tray can hold 50 items. Since we need to package 400 items, we'll need 400 / 50 = 8 trays.
+   - Each conveyor belt can carry up to 20 trays, so one belt is sufficient for trays.
+
+2. **Determine the Number of Sub-Machines and Robots:**
+   - Each "picker" robot can handle up to 25 items. To package 400 items, we'll need 400 / 25 = 16 pickers.
+   - Since each sub-machine can have up to 4 robots, we'll need at least 16 / 4 = 4 sub-machines to handle all the pickers.
+
+3. **Setup of Conveyor Belts:**
+   - We'll need one conveyor belt for items that runs through all sub-machines.
+   - We'll need another conveyor belt for trays that also runs through all sub-machines.
+
+4. **Add "Scanner" and "Picker" Robots:**
+   - Each sub-machine will have both "scanner" and "picker" robots to ensure items are scanned before being picked.
+
+5. **Attach Funnels:**
+   - We'll attach funnels to the sub-machines as needed to collect items from the conveyor belt.
+
+Here's the Python script to achieve this:
+
+```python
+# Step 1: Initialize the packaging line with 4 sub-machines
+packaging_line = PackagingLine(n=4)
+
+# Step 2: Add conveyor belts
+# Conveyor belt for items
+packaging_line.add_conveyor_belt(beginning=0, end=3, belt_type='item')
+
+# Conveyor belt for trays
+packaging_line.add_conveyor_belt(beginning=0, end=3, belt_type='tray')
+
+# Step 3: Configure sub-machines
+# Add scanners and pickers to each sub-machine
+for submachine in packaging_line.submachines:
+    # Add one "scanner" robot
+    submachine.add_packaging_robot(machine_type='scanner')
+    
+    # Add three "picker" robots (since each submachine can hold up to 4 robots and 1 is a scanner)
+    for _ in range(3):
+        submachine.add_packaging_robot(machine_type='picker')
+    
+    # Attach a funnel to the sub-machine
+    submachine.attach_funnel()
+
+# The PackagingLine is now set up with enough capacity to package 400 items.
+```
+
+### Explanation:
+
+1. **Initialization of the Packaging Line:**
+   - We start by creating a `PackagingLine` instance with 4 sub-machines since each sub-machine can hold up to 4 robots, and we need 16 "picker" robots in total.
+
+2. **Adding Conveyor Belts:**
+   - We add two conveyor belts: one for "items" and another for "trays". Both belts run from sub-machine 0 to sub-machine 3 (all sub-machines).
+
+3. **Configuring Sub-Machines:**
+   - For each sub-machine, we add one "scanner" robot and three "picker" robots. This way, each sub-machine has a scanner to ensure items are scanned before being picked.
+   - We also attach a funnel to each sub-machine to collect items from the conveyor belt.
+
+This setup provides a packaging line with sufficient capacity to package 400 items while meeting all the specified requirements.

@@ -1,0 +1,61 @@
+{
+    "functions": [
+        {
+            "name": "PackagingLine",
+            "description": "The constructor creates a new instance of a packaging line with a given amount of sub-machines.",
+            "arguments": [
+                {
+                    "name": "n",
+                    "description": "Amount of sub-machines to add to the packaging line.",
+                    "type": "number"
+                }
+            ],
+            "returns": {
+                "description": "Instance of the packaging line.",
+                "type": "PackagingLine"
+            }
+        },
+        {
+            "name": "add_conveyor_belt",
+            "description": "This method of the PackagingLine type adds a conveyor belt to the packaging line. The convery belt runs through the machines, giving all machines access to the contents of the conveyor belt. Sub-machines are zero-index from left to right.",
+            "arguments": [
+                {
+                    "name": "beginning",
+                    "description": "Index of the first sub-machine to connect the conveyor belt to.",
+                    "type": "number"
+                },
+                {
+                    "name": "end",
+                    "description": "Index of the last sub-machine to connect the conveyor belt to.",
+                    "type": "number"
+                },
+                {
+                    "name": "belt_type",
+                    "description": "Type of the conveyor belt to add. Currently the types 'item' and 'tray' are supported. A belt can never carry both items and trays.",
+                    "type": "string"
+                }
+            ],
+            "returns": {
+                "description": "The amount of machines that had the conveyor belt connected to them.",
+                "type": "number"
+            }
+        },
+        {
+            "name": "add_packaging_robot",
+            "description": "This method of the SubMachine type adds a packaging robot to the sub-machine.",
+            "arguments": [
+                {
+                    "name": "machine_type",
+                    "description": "Type of the packaging machine to add. Currently the types 'picker' and 'scanner' are supported.",
+                    "type": "string"
+                }
+            ],
+            "returns": "void"
+        },
+        {
+            "name": "attach_funnel",
+            "description": "This method of the SubMachine type attaches a funnel to the sub-machine. The method checks if a funnel is already attached to the sub-machine. If a funnel is already attached, the mothod returns false, otherwise true.",
+            "returns": "bool"
+        }
+    ]
+}
