@@ -2,7 +2,7 @@ from typing import List
 from Machines import SubMachine, ConveyorBelt, PackagingRobot
 
 PICKER_CAPACITY = 25
-TRAY_CAPACITY = 50
+ITEMS_PER_TRAY = 50
 TRAYS_PER_BELT = 20
 ITEMS_PER_FUNNEL = 100
 
@@ -15,13 +15,14 @@ class PackagingLine:
         self.submachines = [SubMachine() for _ in range(n)]
         self.conveyor_belts = []
 
-    def add_conveyor_belt(self, beginning: int, end: int, type: str) -> None:
+    def add_conveyor_belt(self, beginning: int, end: int, belt_type: str) -> int:
         assert 0 <= beginning < len(self.submachines) - 1
         assert beginning <= end < len(self.submachines)
         for SubMachine in self.submachines[beginning : end + 1]:
             assert SubMachine.belt_slots > 0
             SubMachine.belt_slots += -1
-        self.conveyor_belts.append(ConveyorBelt(beginning, end, type))
+        self.conveyor_belts.append(ConveyorBelt(beginning, end, belt_type))
+        return beginning - end + 1
 
     def compute_throughput(self) -> int:
         #       - Maybe only allow no more than 100 items per submachine on a belt
@@ -39,11 +40,11 @@ class PackagingLine:
         tray_belts_at_submachnine = [0 for _ in range(len(self.submachines))]
 
         for conveyor_belt in self.conveyor_belts:
-            if conveyor_belt.type == "item":
+            if conveyor_belt.belt_type == "item":
                 for i in range(conveyor_belt.beginning, conveyor_belt.end + 1):
                     item_belts_at_submachnine[i] += 1
                 item_belts += 1
-            elif conveyor_belt.type == "tray":
+            elif conveyor_belt.belt_type == "tray":
                 for i in range(conveyor_belt.beginning, conveyor_belt.end + 1):
                     tray_belts_at_submachnine[i] += 1
                 tray_belts += 1
@@ -69,7 +70,7 @@ class PackagingLine:
 
         item_belt_loads = []
         for conveyor_belt in self.conveyor_belts:
-            if not conveyor_belt.type == "item":
+            if not conveyor_belt.belt_type == "item":
                 continue
 
             belt_load = [[0, 0] for _ in range(len(self.submachines))]
@@ -92,10 +93,10 @@ class PackagingLine:
         remaining_trays = 0
         total_items_picked = 0
         for conveyor_belt in self.conveyor_belts:
-            if not conveyor_belt.type == "tray":
+            if not conveyor_belt.belt_type == "tray":
                 continue
 
-            remaining_slots = TRAYS_PER_BELT * TRAY_CAPACITY
+            remaining_slots = TRAYS_PER_BELT * ITEMS_PER_TRAY
 
             for i in range(conveyor_belt.beginning, conveyor_belt.end + 1):
                 for j in range(len(item_belt_loads)):
@@ -110,7 +111,7 @@ class PackagingLine:
                     remaining_slots -= picked_items
                     picker_capacity[i] -= picked_items
 
-            remaining_trays += float(remaining_slots) / TRAY_CAPACITY
+            remaining_trays += float(remaining_slots) / ITEMS_PER_TRAY
 
         return (
             tray_belts * TRAYS_PER_BELT - remaining_trays,
