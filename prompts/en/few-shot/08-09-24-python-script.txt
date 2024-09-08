@@ -1,0 +1,95 @@
+Given the functions:
+[functions]
+
+and the types:
+[types]
+
+and the constants:
+PICKER_CAPACITY = 25
+ITEMS_PER_TRAY = 50
+TRAYS_PER_BELT = 20
+ITEMS_PER_FUNNEL = 100
+ROBOT_PER_SUBMACHINE = 4
+BELTS_PER_SUBMACHINE = 3
+
+Write a python script that uses the given function and types to create a PackagingLine instance with enough capacity to package 100 items. The items can be only be picked up by a "picker" if the converyer belt was previously scanned by a "scanner". The PackagingLine needs to place the item in trays, which need to move through the machine too. Use the minimal amount of machines necessary. 
+
+Python Script:
+from PackagingLib import PackagingLine
+
+n = 3
+
+packaging_line = PackagingLine(n)
+
+packaging_line.add_conveyor_belt(0, 2, "item")
+packaging_line.add_conveyor_belt(1, 2, "tray")
+
+packaging_line.submachines[0].attach_funnel()
+
+packaging_line.submachines[1].add_packaging_robot("scanner")
+packaging_line.submachines[1].add_packaging_robot("picker")
+packaging_line.submachines[1].add_packaging_robot("picker")
+packaging_line.submachines[1].add_packaging_robot("picker")
+
+packaging_line.submachines[2].add_packaging_robot("picker")
+
+
+Write a python script that uses the given function and types to create a PackagingLine instance with enough capacity to package 100 items. The items can be only be picked up by a "picker" if the converyer belt was previously scanned by a "scanner". The PackagingLine needs to place the item in trays, which need to move through the machine too. Use the minimal amount of machines necessary. 
+
+Python Script:
+from PackagingLib import PackagingLine
+
+n = 4
+
+packaging_line = PackagingLine(n)
+
+packaging_line.add_conveyor_belt(0, 3, "item")
+packaging_line.add_conveyor_belt(1, 3, "tray")
+
+packaging_line.submachines[0].attach_funnel()
+packaging_line.submachines[1].attach_funnel()
+
+packaging_line.submachines[1].add_packaging_robot("scanner")
+packaging_line.submachines[1].add_packaging_robot("picker")
+packaging_line.submachines[1].add_packaging_robot("picker")
+packaging_line.submachines[1].add_packaging_robot("picker")
+
+packaging_line.submachines[2].add_packaging_robot("scanner")
+packaging_line.submachines[2].add_packaging_robot("picker")
+packaging_line.submachines[2].add_packaging_robot("picker")
+packaging_line.submachines[2].add_packaging_robot("picker")
+
+packaging_line.submachines[3].add_packaging_robot("picker")
+packaging_line.submachines[3].add_packaging_robot("picker")
+
+Write a python script that uses the given function and types to create a PackagingLine instance with enough capacity to package 500 items. The items can be only be picked up by a "picker" if the converyer belt was previously scanned by a "scanner". The PackagingLine needs to place the item in trays, which need to move through the machine too. Use the minimal amount of machines necessary. 
+
+Python Script:
+n = 8
+
+packaging_line = PackagingLine(n)
+packaging_line.add_conveyor_belt(0, 7, "item")
+packaging_line.add_conveyor_belt(1, 7, "tray")
+
+packaging_line.submachines[0].attach_funnel()
+packaging_line.submachines[1].attach_funnel()
+packaging_line.submachines[2].attach_funnel()
+packaging_line.submachines[3].attach_funnel()
+packaging_line.submachines[4].attach_funnel()
+
+for i in range(1, 6):
+    packaging_line.submachines[i].add_packaging_robot("scanner")
+    packaging_line.submachines[i].add_packaging_robot("picker")
+    packaging_line.submachines[i].add_packaging_robot("picker")
+    packaging_line.submachines[i].add_packaging_robot("picker")
+
+packaging_line.submachines[6].add_packaging_robot("picker")
+packaging_line.submachines[6].add_packaging_robot("picker")
+packaging_line.submachines[6].add_packaging_robot("picker")
+packaging_line.submachines[6].add_packaging_robot("picker")
+
+packaging_line.submachines[7].add_packaging_robot("picker")
+
+Write a python script that uses the given function and types to create a PackagingLine instance with enough capacity to package 100 items. The items can be only be picked up by a "picker" if the converyer belt was previously scanned by a "scanner". The PackagingLine needs to place the item in trays, which need to move through the machine too. Use the minimal amount of machines necessary. 
+
+Python Script:

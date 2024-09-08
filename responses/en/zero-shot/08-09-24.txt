@@ -1,0 +1,75 @@
+To solve this problem, we need to design a Python script that creates a `PackagingLine` instance capable of packaging 400 items using the fewest sub-machines necessary, adhering to the given constraints. 
+
+Here’s a breakdown of the problem requirements and constraints:
+
+1. **Packaging Line Requirements:**
+   - We need to package 400 items.
+   - The items must be placed into trays (50 items per tray).
+   - Items can only be picked up by a "picker" if the conveyor belt is first scanned by a "scanner".
+   - The conveyor belt can only carry either "items" or "trays," not both.
+
+2. **Capacity Constraints:**
+   - **Picker capacity**: Each picker robot can handle 25 items.
+   - **Trays per conveyor belt**: Each conveyor belt can carry 20 trays.
+   - **Items per funnel**: A funnel can handle 100 items.
+   - **Robots per sub-machine**: Each sub-machine can have a maximum of 4 robots.
+   - **Belts per sub-machine**: Each sub-machine can have a maximum of 3 conveyor belts.
+
+3. **Optimal Packaging Line Configuration:**
+   - **Conveyor Belts**: At least two types — "item" belts for items and "tray" belts for trays.
+   - **Sub-Machines**: Each sub-machine will contain a combination of pickers and scanners as necessary.
+   - **Funnels**: Funnels are necessary to handle items in larger quantities.
+
+### Plan
+
+1. **Create a `PackagingLine` with a sufficient number of sub-machines.** We'll start with 7 sub-machines to provide room for configuration flexibility.
+2. **Configure the conveyor belts**: Set up the "item" conveyor belts and "tray" conveyor belts to carry the items and trays across the machines.
+3. **Add `picker` and `scanner` robots** to each sub-machine to ensure that items are scanned before being picked up.
+4. **Attach funnels** to appropriate sub-machines to manage item throughput.
+5. **Ensure the configuration meets the requirement of 400 items being packed.**
+
+### Python Script
+
+```python
+# Create a PackagingLine instance with 7 sub-machines
+packaging_line = PackagingLine(7)
+
+# Add conveyor belts to the packaging line
+# Conveyor belt for items (carrying items through sub-machines 0 to 3)
+packaging_line.add_conveyor_belt(0, 3, "item")
+
+# Conveyor belt for trays (carrying trays through sub-machines 4 to 6)
+packaging_line.add_conveyor_belt(4, 6, "tray")
+
+# Configure sub-machines with robots and funnels
+for i in range(4):
+    # Add a scanner and a picker to each of the first 4 sub-machines (index 0 to 3)
+    packaging_line.submachines[i].add_packaging_robot("scanner")
+    packaging_line.submachines[i].add_packaging_robot("picker")
+    # Attach a funnel to each sub-machine for handling 100 items per funnel
+    packaging_line.submachines[i].attach_funnel()
+
+# The last three sub-machines (4 to 6) handle the trays
+for i in range(4, 7):
+    # Only add picker robots to handle trays (no need for scanners)
+    packaging_line.submachines[i].add_packaging_robot("picker")
+    # Trays don't require a funnel, so we skip attaching funnels
+
+# Output the state of the packaging line for verification
+print(f"Sub-machines: {len(packaging_line.submachines)}")
+print(f"Conveyor belts: {len(packaging_line.conveyor_belts)}")
+for i, submachine in enumerate(packaging_line.submachines):
+    print(f"Sub-machine {i}:")
+    print(f"  Robots: {[robot.machine_type for robot in submachine.packaging_robots]}")
+    print(f"  Funnel attached: {submachine.funnel}")
+```
+
+### Explanation
+
+- **Sub-machines 0 to 3** are configured with both a "scanner" and a "picker" robot, and each sub-machine has a funnel attached to handle the items. The scanners ensure the items are scanned before being picked up.
+- **Sub-machines 4 to 6** are configured with "picker" robots to handle trays without funnels since trays do not require placement by a picker.
+- **Two conveyor belts** are added: one for "items" and another for "trays," ensuring each type of item is appropriately handled.
+
+### Conclusion
+
+This script creates a `PackagingLine` with minimal sub-machines while meeting all constraints and effectively packaging 400 items.

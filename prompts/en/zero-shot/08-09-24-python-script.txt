@@ -1,0 +1,18 @@
+Given the functions:
+[functions]
+
+and the types:
+[types]
+
+and the constants:
+PICKER_CAPACITY = 25
+ITEMS_PER_TRAY = 50
+TRAYS_PER_BELT = 20
+ITEMS_PER_FUNNEL = 100
+ROBOT_PER_SUBMACHINE = 4
+BELTS_PER_SUBMACHINE = 3
+
+Write a python script that uses the given function and types to create a PackagingLine instance with enough capacity to package 400 items. The items can be only be picked up by a "picker" if the converyer belt was previously scanned by a "scanner". The PackagingLine needs to place the item in trays, which need to move through the machine too. Use the minimal amount of machines necessary. 
+
+Python Script:
+packaging_line = PackagingLine(7)
