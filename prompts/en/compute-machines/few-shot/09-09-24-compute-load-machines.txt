@@ -1,0 +1,39 @@
+Given the functions:
+[functions]
+
+and the types:
+[types]
+
+and the constants:
+PICKER_CAPACITY = 25
+ITEMS_PER_TRAY = 50
+TRAYS_PER_BELT = 20
+ITEMS_PER_FUNNEL = 100
+ROBOT_PER_SUBMACHINE = 4
+BELTS_PER_SUBMACHINE = 3
+
+Compute how many pickers, scanners and funnel are necessary to process 100 items. Then compute how many submachines are needed to fit all the robots requierd.
+
+Requiered machines:
+- 1 funnel
+- 1 scanner
+- 4 pickers
+- 2 submachine
+
+Compute how many pickers, scanners and funnel are necessary to process 200 items. Then compute how many submachines are needed to fit all the robots requierd.
+
+Requiered machines:
+- 2 funnel
+- 1 scanner
+- 8 pickers
+- 2 submachine
+
+Compute how many pickers, scanners and funnel are necessary to process 400 items. Then compute how many submachines are needed to fit all the robots requierd.
+
+Requiered machines:
+- 4 funnel
+- 1 scanner
+- 16 pickers
+- 5 submachine
+
+Compute how many pickers, scanners and funnel are necessary to process 500 items. Then compute how many submachines are needed to fit all the robots requierd.

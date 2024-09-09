@@ -1,0 +1,56 @@
+{
+    "types": {
+        "PackagingLine": {
+            "description": "A class that represents a packaging line.",
+            "properties": {
+                "submachines": {
+                    "description": "Array of packaging machines in the packaging line.",
+                    "type": "Array<SubMachines>"
+                },
+                "conveyor_belts": {
+                    "description": "Array of conveyor belts in the packaging line.",
+                    "type": "Array<ConveyorBelt>"
+                }
+            }
+        },
+        "SubMachine": {
+            "description": "A class that represents a sub-machine in a packaging line.",
+            "properties": {
+                "packaging_robots": {
+                    "description": "Array of packaging machines in the sub-machine.",
+                    "type": "Array<PackagingRobot>"
+                },
+                "funnel": {
+                    "description": "Boolean value that indicates if a funnel is attached to the sub-machine. Funnels are the only way to insert items into the packaging line.",
+                    "type": "bool"
+                }
+            }
+        },
+        "PackagingRobot": {
+            "description": "A class that represents a packaging robot in a sub-machine.",
+            "properties": {
+                "machine_type": {
+                    "description": "Type of the packaging machine.",
+                    "type": "string"
+                }
+            }
+        },
+        "ConveyorBelt": {
+            "description": "A class that represents a conveyor belt in a packaging line. A conveyor belt can either carry items or trays. If a conveyor belt carrys trays they don't have to be placed or picked up by a picker.",
+            "properties": {
+                "beginning": {
+                    "description": "Index of the first sub-machine the conveyor belt is connected to.",
+                    "type": "number"
+                },
+                "end": {
+                    "description": "Index of the last sub-machine the conveyor belt is connected to.",
+                    "type": "number"
+                },
+                "belt_type": {
+                    "description": "Type of the conveyor belt. Currently the types 'item' and 'tray' are supported.",
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
