@@ -130,7 +130,7 @@ class PackagingLine:
                 if robot.type == "picker":
                     cost += 100
                 if robot.type == "scanner":
-                    cost += 300
+                    cost += 3000
             if submachine.funnel:
                 cost += 25
             cost += 500
