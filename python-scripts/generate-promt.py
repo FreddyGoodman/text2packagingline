@@ -2,7 +2,7 @@ import os
 import glob
 import datetime
 
-levels = ["convert-to-call", "compute-load", "compute-machines", "strucutre-machines"]
+levels = ["convert-to-call", "structure-machines", "compute-machines", "compute-load"]
 promt_types = ["zero-shot", "few-shot", "chain-of-thought"]
 # Define which language to use
 lang = "en"

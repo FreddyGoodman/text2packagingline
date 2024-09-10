@@ -1,0 +1,36 @@
+Given the functions:
+[functions]
+
+and the types:
+[types]
+
+and the constants:
+PICKER_CAPACITY = 30
+ITEMS_PER_TRAY = 40
+TRAYS_PER_BELT = 4
+ITEMS_PER_FUNNEL = 100
+ROBOT_PER_SUBMACHINE = 4
+BELTS_PER_SUBMACHINE = 3
+
+and the following costs:
+PackagingLine = 1000
+SubMachine = 500
+BeltFixed = 50
+BeltLength = 5
+Picker = 100
+Scanner = 3000
+Funnel = 25
+
+Write a python script that creates a packigin line that meets the folling requirments:
+
+The packaging line has 3 submachines.
+
+A belt of the type "item" runs from machine 1 to machine 3.
+A belt of the type "tray" runs from machine 2 to machine 3.
+
+Machine 1 has a funnel.
+
+Machine 2 contains a scanner robot.
+Machine 2 contains three picker robots.
+
+Machine 3 contains a picker robot.
