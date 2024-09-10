@@ -1,9 +1,9 @@
 from typing import List
 from Machines import SubMachine, ConveyorBelt, PackagingRobot
 
-PICKER_CAPACITY = 25
-ITEMS_PER_TRAY = 50
-TRAYS_PER_BELT = 20
+PICKER_CAPACITY = 30
+ITEMS_PER_TRAY = 40
+TRAYS_PER_BELT = 4
 ITEMS_PER_FUNNEL = 100
 
 
@@ -54,18 +54,18 @@ class PackagingLine:
         funnel_input_at_submachine = []
         funnels = 0
         for i in range(len(self.submachines)):
+            loads = []
             if self.submachines[i].funnel:
                 funnels += 1
-            loads = []
-            total = ITEMS_PER_FUNNEL
-            fraction = ITEMS_PER_FUNNEL // item_belts_at_submachnine[i]
-            for j in range(item_belts_at_submachnine[i]):
-                if total <= fraction:
-                    loads.append(total)
-                    break
-                else:
-                    loads.append(fraction)
-                    total += -fraction
+                total = ITEMS_PER_FUNNEL
+                fraction = ITEMS_PER_FUNNEL // item_belts_at_submachnine[i]
+                for j in range(item_belts_at_submachnine[i]):
+                    if total <= fraction:
+                        loads.append(total)
+                        break
+                    else:
+                        loads.append(fraction)
+                        total += -fraction
             funnel_input_at_submachine.append(loads)
 
         item_belt_loads = []
@@ -104,7 +104,7 @@ class PackagingLine:
                         picker_capacity[i], item_belt_loads[j][i][0], remaining_slots
                     )
 
-                    for k in range(i, conveyor_belt.end + 1):
+                    for k in range(i, len(self.submachines)):
                         item_belt_loads[j][k][0] -= picked_items
 
                     total_items_picked += picked_items

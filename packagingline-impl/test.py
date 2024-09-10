@@ -7,104 +7,56 @@
 
 from PackagingLib import PackagingLine
 
-n = 3
+def test_smallest() -> PackagingLine:
+    line_length = 3
+    line = PackagingLine(line_length)
 
-packaging_line = PackagingLine(n)
+    line.submachines[0].attach_funnel()
 
-packaging_line.add_conveyor_belt(0, 2, "item")
-packaging_line.add_conveyor_belt(1, 2, "tray")
+    line.submachines[1].add_packaging_robot("scanner")
+    line.submachines[1].add_packaging_robot("picker")
+    line.submachines[1].add_packaging_robot("picker")
+    line.submachines[1].add_packaging_robot("picker")
+    
+    line.submachines[2].add_packaging_robot("picker")
+    
+    line.add_conveyor_belt(0, 2, "item")
+    line.add_conveyor_belt(1, 2, "tray")
 
-packaging_line.submachines[0].attach_funnel()
+    return line
 
-packaging_line.submachines[1].add_packaging_robot("scanner")
-packaging_line.submachines[1].add_packaging_robot("picker")
-packaging_line.submachines[1].add_packaging_robot("picker")
-packaging_line.submachines[1].add_packaging_robot("picker")
+def test_small() -> PackagingLine:
+    line_length = 4
+    line = PackagingLine(line_length)
 
-packaging_line.submachines[2].add_packaging_robot("picker")
+    line.submachines[0].attach_funnel()
 
-print(packaging_line.throughput_string())
-print(packaging_line.cost_string())
+    line.submachines[1].attach_funnel()
+    # line.submachines[1].add_packaging_robot("scanner")
+    # line.submachines[1].add_packaging_robot("picker")
+    # line.submachines[1].add_packaging_robot("picker")
+    # line.submachines[1].add_packaging_robot("picker")
 
-n = 4
+    line.submachines[2].add_packaging_robot("scanner")
+    line.submachines[2].add_packaging_robot("picker")
+    line.submachines[2].add_packaging_robot("picker")
+    line.submachines[2].add_packaging_robot("picker")
+    
+    line.submachines[3].add_packaging_robot("picker")
+    line.submachines[3].add_packaging_robot("picker")
+    line.submachines[3].add_packaging_robot("picker")
+    line.submachines[3].add_packaging_robot("picker")
 
-packaging_line = PackagingLine(n)
+    line.add_conveyor_belt(0, 3, "item")
+    line.add_conveyor_belt(1, 2, "tray")
+    line.add_conveyor_belt(2, 3, "tray")
 
-packaging_line.add_conveyor_belt(0, 3, "item")
-packaging_line.add_conveyor_belt(1, 3, "tray")
+    return line
 
-packaging_line.submachines[0].attach_funnel()
-packaging_line.submachines[1].attach_funnel()
+def test_large() -> PackagingLine:
+    pass
+    
 
-packaging_line.submachines[1].add_packaging_robot("scanner")
-packaging_line.submachines[1].add_packaging_robot("picker")
-packaging_line.submachines[1].add_packaging_robot("picker")
-packaging_line.submachines[1].add_packaging_robot("picker")
-
-packaging_line.submachines[2].add_packaging_robot("scanner")
-packaging_line.submachines[2].add_packaging_robot("picker")
-packaging_line.submachines[2].add_packaging_robot("picker")
-packaging_line.submachines[2].add_packaging_robot("picker")
-
-packaging_line.submachines[3].add_packaging_robot("picker")
-packaging_line.submachines[3].add_packaging_robot("picker")
-
-print(packaging_line.throughput_string())
-print(packaging_line.cost_string())
-
-n = 8
-
-packaging_line = PackagingLine(n)
-packaging_line.add_conveyor_belt(0, 7, "item")
-packaging_line.add_conveyor_belt(1, 7, "tray")
-
-packaging_line.submachines[0].attach_funnel()
-packaging_line.submachines[1].attach_funnel()
-packaging_line.submachines[2].attach_funnel()
-packaging_line.submachines[3].attach_funnel()
-packaging_line.submachines[4].attach_funnel()
-
-for i in range(1, 6):
-    packaging_line.submachines[i].add_packaging_robot("scanner")
-    packaging_line.submachines[i].add_packaging_robot("picker")
-    packaging_line.submachines[i].add_packaging_robot("picker")
-    packaging_line.submachines[i].add_packaging_robot("picker")
-
-packaging_line.submachines[6].add_packaging_robot("picker")
-packaging_line.submachines[6].add_packaging_robot("picker")
-packaging_line.submachines[6].add_packaging_robot("picker")
-packaging_line.submachines[6].add_packaging_robot("picker")
-
-packaging_line.submachines[7].add_packaging_robot("picker")
-
-print(packaging_line.throughput_string())
-print(packaging_line.cost_string())
-
-# Step 1: Create a PackagingLine instance with 3 sub-machines
-packaging_line = PackagingLine(3)
-
-# Step 2: Add conveyor belts
-# A belt of the type "item" runs from machine 1 to machine 3
-packaging_line.add_conveyor_belt(beginning=0, end=2, belt_type="item")
-
-# A belt of the type "tray" runs from machine 2 to machine 3
-packaging_line.add_conveyor_belt(beginning=1, end=2, belt_type="tray")
-
-# Step 3: Attach a funnel to Machine 1 (index 0)
-machine_1 = packaging_line.submachines[0]
-machine_1.attach_funnel()
-
-# Step 4: Add robots to sub-machines
-# Machine 2 (index 1) contains a scanner robot and three picker robots
-machine_2 = packaging_line.submachines[1]
-machine_2.add_packaging_robot(machine_type="scanner")
-for _ in range(3):
-    machine_2.add_packaging_robot(machine_type="picker")
-
-# Machine 3 (index 2) contains a picker robot
-machine_3 = packaging_line.submachines[2]
-machine_3.add_packaging_robot(machine_type="picker")
-
-print(packaging_line.throughput_string())
-print(packaging_line.cost_string())
-
+line = test_small()
+print(line.throughput_string())  
+print(line.cost_string())
