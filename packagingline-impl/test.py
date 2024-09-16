@@ -57,31 +57,30 @@ def test_large() -> PackagingLine:
     pass
     
 def test_response() -> PackagingLine:
-    
-    packagingLine = PackagingLine(3)
+    # Assuming the provided functions and types are accessible
 
-    
-    packagingLine.submachines[0].attach_funnel()
+    # Create a packaging line with 3 submachines
+    packaging_line = PackagingLine(3)
 
-    
-    packagingLine.add_conveyor_belt(0, 1, 'item')
+    # First submachine (index 0) - Attach a funnel
+    packaging_line.submachines[0].attach_funnel()
 
-    
-    packagingLine.submachines[0].add_packaging_robot('picker')
+    # Second submachine (index 1) - Add one scanner and three pickers
+    packaging_line.submachines[1].add_packaging_robot('scanner')  # Add scanner
+    packaging_line.submachines[1].add_packaging_robot('picker')   # Add first picker
+    packaging_line.submachines[1].add_packaging_robot('picker')   # Add second picker
+    packaging_line.submachines[1].add_packaging_robot('picker')   # Add third picker
 
-    
-    packagingLine.submachines[1].add_packaging_robot('scanner')
+    # Third submachine (index 2) - Add one picker
+    packaging_line.submachines[2].add_packaging_robot('picker')   # Add picker
 
-    
-    packagingLine.submachines[1].add_packaging_robot('picker')
+    # Add a conveyor belt for items, spanning all three machines (from 0 to 2)
+    packaging_line.add_conveyor_belt(0, 2, 'item')
 
-    
-    packagingLine.add_conveyor_belt(2, 2, 'tray')
+    # Add a conveyor belt for trays, connecting the second and third machines (from 1 to 2)
+    packaging_line.add_conveyor_belt(1, 2, 'tray')
 
-    
-
-
-
+    return packaging_line
 line = test_smallest()
 print(line.throughput_string())  
 print(line.cost_string())

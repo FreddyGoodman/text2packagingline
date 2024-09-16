@@ -1,0 +1,12 @@
+Given the functions:
+[functions]
+
+and the types:
+[types]
+
+and the facts:
+[world-knowledge]
+
+Provide a python script that uses the described functions to create a packaging line with enough capacity to package 200 items. The packaging line should have the lowest possible cost.
+
+Make sure to properly plan your code. It is important to have a clear structure and to use the provided functions and types. Reuse results from previous inference levels where possible.

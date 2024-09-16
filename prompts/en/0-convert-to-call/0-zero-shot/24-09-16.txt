@@ -1,0 +1,21 @@
+Given the functions:
+[functions]
+
+and the types:
+[types]
+
+and the facts:
+[world-knowledge]
+
+Write a pyhton script that uses the given functions to create a packaging line with enough capacity to package 100 items. The packaging line should have the lowest possible cost.
+
+The packaging line should be 3 submachines long.
+
+The first submachine only has a funnel attached to it.
+
+The second submachine has one scanner and three pickers inside it.
+
+The third submachine contains one picker.
+
+A conveyor belt for items spans from the first to the last machine.
+A conveyor belt for trays connects the second with the third machine.

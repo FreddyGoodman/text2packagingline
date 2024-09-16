@@ -7,4 +7,4 @@ and the types:
 and the facts:
 [world-knowledge]
 
-Provide a script that uses the described functions to create a packaging line with enough capacity to package 200 items. The packaging line should have the lowest possible cost.
+Provide a python script that uses the described functions to create a packaging line with enough capacity to package 200 items. The packaging line should have the lowest possible cost.
