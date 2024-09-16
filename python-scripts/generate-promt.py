@@ -2,15 +2,15 @@ import os
 import glob
 import datetime
 
-levels = ["convert-to-call", "strucutre-machine", "compute-machines", "compute-load"]
-promt_types = ["zero-shot", "few-shot", "chain-of-thought"]
+levels = ["0-convert-to-call", "1-compute-robots", "2-compute-machines", "3-structure-line"]
+promt_types = ["0-zero-shot", "1-general-instruction", "2-specific-instruction"]
 # Define which language to use
 lang = "en"
-level = 0
+level = 3
 promt_type = 0
 
 # Define the source folders
-folders = [f"./prompts/{lang}/{levels[level]}/{promt_types[promt_type]}/", "./functions-json/", "./types-json/"]
+folders = [f"./prompts/{lang}/{levels[level]}/{promt_types[promt_type]}/", "./functions-json/", "./types-json/", "./world-knowledge"]
 
 # Get the newest file from each folder
 newest_files = []
@@ -28,6 +28,8 @@ for i, file in enumerate(newest_files):
             combined_content = combined_content.replace("[functions]", content)
         elif i == 2:
             combined_content = combined_content.replace("[types]", content)
+        elif i == 3:
+            combined_content = combined_content.replace("[world-knowledge]", content)
         else:
             combined_content += content
 
