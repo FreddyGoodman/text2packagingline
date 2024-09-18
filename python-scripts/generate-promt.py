@@ -6,7 +6,7 @@ levels = ["0-convert-to-call", "1-compute-robots", "2-compute-machines", "3-stru
 promt_types = ["0-zero-shot", "1-general-instruction", "2-specific-instruction"]
 # Define which language to use
 lang = "en"
-level = 0
+level = 1
 promt_type = 0
 
 # Define the source folders
