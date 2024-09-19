@@ -17,7 +17,7 @@
         },
         {
             "name": "add_conveyor_belt",
-            "description": "This method of the PackagingLine type adds a conveyor belt to the packaging line. The convery belt runs through the machines, giving all machines access to the contents of the conveyor belt. Sub-machines are zero-index from left to right.",
+            "description": "This method of the PackagingLine type adds a conveyor belt to the packaging line. The conveyor belt runs through the machines, giving all machines access to the contents of the conveyor belt. Sub-machines are zero-index from left to right.",
             "arguments": [
                 {
                     "name": "beginning",

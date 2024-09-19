@@ -3,14 +3,14 @@ import glob
 import datetime
 
 levels = ["0-convert-to-call", "1-compute-robots", "2-compute-machines", "3-structure-line"]
-promt_types = ["0-zero-shot", "1-general-instruction", "2-specific-instruction"]
+prompt_types = ["0-zero-shot", "1-general-instruction", "2-specific-instruction"]
 # Define which language to use
 lang = "en"
 level = 1
-promt_type = 0
+prompt_type = 0
 
 # Define the source folders
-folders = [f"./prompts/{lang}/{levels[level]}/{promt_types[promt_type]}/", "./functions-json/", "./types-json/", "./world-knowledge"]
+folders = [f"./prompts/{lang}/{levels[level]}/{prompt_types[prompt_type]}/", "./functions-json/", "./types-json/", "./world-knowledge"]
 
 # Get the newest file from each folder
 newest_files = []
@@ -39,7 +39,7 @@ os.makedirs(destination_folder, exist_ok=True)
 
 # Save the combined content to the destination folder with the current date in the file name
 current_date = datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
-file_name = f"{current_date}-{levels[level]}-{promt_types [promt_type]}.txt"
+file_name = f"{current_date}-{levels[level]}-{prompt_types [prompt_type]}.txt"
 
 with open(os.path.join(destination_folder, file_name), "w") as f:
     f.write(combined_content)
