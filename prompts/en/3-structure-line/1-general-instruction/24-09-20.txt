@@ -1,0 +1,14 @@
+Given the functions:
+[functions]
+
+and the types:
+[types]
+
+and the facts:
+[world-knowledge]
+
+Write a python function that only uses the given API to return a packaging line with enough capacity to package 100 items. The packaging line should have the lowest possible cost.
+Make sure to not implement any functions. Only use the given functions.
+
+Create a detailed plan before actually implementing the function. Your plan has to include each necessary inference step to correctly construct the packaging line. Solve each problem explicitly, i.e. computation of values depending on the requirements or limits imposed by the provided facts. When it comes to the structure of the packaging, explicitly describe the relative dependencies of all components used in the packaging line and why it is correct to structure the packaging line this way. 
+Only after you have performed all the inference steps needed to create a correct packaging line should you write the function.

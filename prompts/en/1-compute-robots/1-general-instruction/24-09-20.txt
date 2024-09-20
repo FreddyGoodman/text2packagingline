@@ -1,0 +1,22 @@
+Given the functions:
+[functions]
+
+and the types:
+[types]
+
+and the facts:
+[world-knowledge]
+
+Write a python function that only uses the given API to return a packaging line with enough capacity to package 100 items. The packaging line should have the lowest possible cost.
+Make sure to not implement any functions. Only use the given functions.
+
+The packaging line should be 3 submachines long.
+
+Compute how many funnels are necessary to input all items into the machine and attach them starting from the first machine.
+
+Compute how many scanners are necessary to scan all items and attach them starting from the second machine.
+
+Compute how many pickers are necessary to pick all items and attach them starting from the second machine.
+
+Compute how many trays are necessary to output all items from the machine and attach enough tray belts starting from the second machine.
+Attach an item belt from the first to the last machine.

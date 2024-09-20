@@ -1,0 +1,19 @@
+Given the functions:
+[functions]
+
+and the types:
+[types]
+
+and the facts:
+[world-knowledge]
+
+Write a python function that only uses the given API to return a packaging line with enough capacity to package 100 items. The packaging line should have the lowest possible cost.
+Make sure to not implement any functions. Only use the given functions.
+
+The packaging line should be 3 submachines long.
+Compute how many funnels are necessary to input all items into the machine. Do that by dividing the total amount of items by the a single funnels capacity and rounding up the result.
+Attach the funnels to the machine starting at the first one. 
+Compute how many scanners are necessary to scan all items. Do that by identifiying the capacity of a single scanner and then infere how many are need at least. Use the smallest amount of scanners and start filling the robot slots from the second submachine onwards.
+Compute how many pickers are necessary to place all items in trays. Do that by dividing the total amount of items by the a single pickers capacity and rounding up the result. Start filling the robotslots and begin at the second submachine.
+Compute how many tray belts are necessary to have enough space available for all items. First, multiply the amount a single tray can hold with the amount of trays that one belt can carry and divide the result by the amount of items the machine should use. Round up the result and evenly distribute the required amount of belts across all submachines starting from the second one.
+Finally, attach a item belt from the first to the last machine.

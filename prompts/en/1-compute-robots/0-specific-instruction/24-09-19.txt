@@ -11,3 +11,5 @@ Write a python function that only uses the given API to return a packaging line 
 Make sure to not implement any functions. Only use the given functions.
 
 The packaging line should be 3 submachines long.
+
+Compute how many funnels are necessary to input all items into the machine. Do that, by dividing the total amount of items 
