@@ -1,0 +1,111 @@
+### Step-by-Step Plan:
+
+The goal is to create a packaging line that can handle **100 items per unit of time** and has the **lowest possible cost**. Each part of the problem needs to be solved explicitly using the available API functions and types.
+
+---
+
+#### 1. **Funnel Placement**
+   - A funnel is the only way to input items into the packaging line.
+   - The funnel can supply **100 items** per unit of time, which matches the requirement.
+   - **Action**: Attach a funnel to the first submachine.
+   - **Sub-machine limit**: Each submachine can only have one funnel.
+
+---
+
+#### 2. **Conveyor Belts**
+   - **Belt Types**:
+     - A conveyor belt can either carry **items** or **trays**.
+     - **Tray belts** can carry **4 trays**.
+   - Since **items must be placed on trays** by a picker robot, there needs to be at least one **tray belt** and one **item belt** in the system.
+   
+   **Action**: Create the necessary conveyor belts:
+   - A **tray conveyor belt** that connects all relevant submachines, so that **trays** can flow through.
+   - An **item conveyor belt** that moves **items** from the submachine with the funnel to the submachines with scanners and pickers.
+   
+   **Optimal belt structure**:
+   - Place a conveyor belt spanning submachines that connects the **tray belt** across all submachines involved in packaging.
+   - Another conveyor belt carries **items** from the first submachine (with the funnel) to the rest for scanning and picking.
+
+---
+
+#### 3. **Scanner Robot**
+   - The **scanner robot** is needed to scan the position of the items. Without scanning, the picker robot cannot operate efficiently.
+   - Each submachine can have one scanner, and it can scan an arbitrary number of items per unit time. However, a scanner **cannot scan items input in the same submachine as it is placed**.
+   - **Action**: Place a **scanner** in the second submachine to handle the item scanning.
+
+---
+
+#### 4. **Picker Robot**
+   - The **picker robot** can pick up a maximum of **30 items** at a time and place them onto trays.
+   - To handle **100 items**, we need **multiple pickers** since a single picker can handle only **30 items per unit time**.
+   - To handle **100 items**, we need at least **4 pickers** (3 pickers can handle 90 items, which is insufficient).
+   - **Action**: Place **4 pickers** distributed across different submachines. These pickers will place the scanned items on trays.
+   
+---
+
+#### 5. **Submachine Count**
+   - Each submachine can hold **4 robots** (either pickers or scanners), meaning:
+     - A submachine can hold 1 scanner and 3 pickers.
+   - To minimize the cost, we need to create the smallest number of submachines that can fit all the required robots.
+   - Since we need **4 pickers** and **1 scanner**, we can distribute them across **two submachines**:
+     - The second submachine can hold **1 scanner** and **3 pickers**.
+     - A third submachine can hold the **remaining picker**.
+
+---
+
+#### 6. **Cost Calculation and Minimization**
+   - **Packaging Line**: Base cost of 1000.
+   - **Submachines**: Each submachine costs 500.
+   - **Conveyor belts**: A belt spanning multiple submachines costs **50** base + **5** per submachine spanned.
+   - **Pickers**: Each picker costs **100**.
+   - **Scanner**: Each scanner costs **3000**.
+   - **Funnel**: Each funnel costs **25**.
+
+---
+
+### Breakdown of Components Needed:
+1. **Submachines**:
+   - Submachine 1 (with funnel): Holds the funnel and one conveyor belt (item belt).
+   - Submachine 2 (with scanner): Holds 1 scanner, 3 pickers.
+   - Submachine 3: Holds 1 picker.
+
+2. **Conveyor belts**:
+   - One conveyor belt for trays spanning submachines 2 and 3.
+   - One conveyor belt for items spanning submachine 1 (funnel) and the submachine 2 (with the scanner).
+
+---
+
+### Python Code Implementation:
+
+```python
+# Step 1: Create the packaging line with 3 submachines.
+packaging_line = PackagingLine(3)
+
+# Step 2: Attach a funnel to the first submachine.
+# Submachine 1 handles the input of items through the funnel.
+packaging_line.submachines[0].attach_funnel()
+
+# Step 3: Add the conveyor belts.
+# Belt 1: Item conveyor belt spanning from submachine 1 to submachine 2
+packaging_line.add_conveyor_belt(0, 1, "item")
+
+# Belt 2: Tray conveyor belt spanning from submachine 2 to submachine 3
+packaging_line.add_conveyor_belt(1, 2, "tray")
+
+# Step 4: Add the scanner in submachine 2.
+packaging_line.submachines[1].add_packaging_robot("scanner")
+
+# Step 5: Add the picker robots.
+# We need 3 pickers in submachine 2 (which can hold up to 4 robots in total, including the scanner).
+for _ in range(3):
+    packaging_line.submachines[1].add_packaging_robot("picker")
+
+# Add 1 picker in submachine 3.
+packaging_line.submachines[2].add_packaging_robot("picker")
+```
+
+### Explanation:
+- **Submachine 1**: Holds the funnel and the item conveyor belt.
+- **Submachine 2**: Holds 1 scanner and 3 pickers, making it the key machine for scanning and picking.
+- **Submachine 3**: Holds 1 picker for the remaining items.
+- **Conveyor belts**: An item conveyor belt connects submachine 1 to 2, and a tray conveyor belt spans from submachine 2 to 3.

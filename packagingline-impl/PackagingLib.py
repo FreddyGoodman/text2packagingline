@@ -106,6 +106,8 @@ class PackagingLine:
 
                     for k in range(i, len(self.submachines)):
                         item_belt_loads[j][k][0] -= picked_items
+                        if item_belt_loads[j][k][0] < 0:
+                            item_belt_loads[j][k][0] = 0
 
                     total_items_picked += picked_items
                     remaining_slots -= picked_items

@@ -18,10 +18,12 @@
 - To know the position of an item, the item must be scanned.
 - The machine that can scan items is called the "scanner".
 - The scanner can scan an arbitrary amount of items.
-- The scanner can only scan items that have been put on the conveyor belt in a previous machine.
+- The scanner can only scan items that arriving on a conveyor belt.
+- The scanner can not scan items that are input in the same submachine as the scanner.
 - Once an item has been scanned, it does not have to be scanned ever again.
 - The scanner can scan all belts in a submachine.
 - The scanner counts towards the robot limit in a submachine.
+- For an item to be correctly placed on a tray, the submachine it is in must have an item belt, a tray belt and a picker with some picking capacity remaining.
 - All components of a packaging line have a cost.
 - The base cost of a packaging line is 1000.
 - The cost of a submachine is 500.
