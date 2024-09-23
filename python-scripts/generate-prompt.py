@@ -3,11 +3,11 @@ import glob
 import datetime
 
 levels = ["0-convert-to-call", "1-compute-robots", "2-compute-machines", "3-structure-line"]
-prompt_types = ["0-zero-shot", "1-general-instruction", "2-specific-instruction"]
+prompt_types = ["0-specific-instruction", "1-general-instruction"]
 # Define which language to use
 lang = "en"
-level = 1
-prompt_type = 0
+level = 3
+prompt_type = 1
 
 # Define the source folders
 folders = [f"./prompts/{lang}/{levels[level]}/{prompt_types[prompt_type]}/", "./functions-json/", "./types-json/", "./world-knowledge"]

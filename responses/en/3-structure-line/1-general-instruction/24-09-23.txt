@@ -1,0 +1,88 @@
+### Step-by-Step Plan
+
+#### Problem Breakdown:
+We need to design a packaging line with enough capacity to package 100 items in one unit of time, using the minimal cost. To do this, we must account for the constraints and costs of each component.
+
+#### Step 1: Funnel Placement
+A funnel supplies 100 items per unit of time, and there can only be one funnel attached to the entire packaging line. Therefore, we need exactly one funnel to supply the required number of items.
+
+- **Decision:** Attach a funnel to the first submachine.
+
+#### Step 2: Tray Capacity and Packaging Process
+Each tray has a capacity of 40 items. To package 100 items, we need \( \lceil \frac{100}{40} \rceil = 3 \) trays per unit of time. Since each tray conveyor belt can carry 4 trays, one conveyor belt for trays can handle 3 trays without issue.
+
+- **Decision:** We need one tray conveyor belt to span all submachines.
+
+#### Step 3: Picker Requirements
+Pickers are responsible for placing items on trays. A picker can handle a maximum of 30 items at a time. To place 100 items on trays in one unit of time, we need \( \lceil \frac{100}{30} \rceil = 4 \) pickers.
+
+- **Decision:** Add 4 pickers spread across multiple submachines, as no submachine can hold more than 4 robots.
+
+#### Step 4: Scanner Requirements
+For pickers to place items on trays, the items must be scanned to determine their position. Since scanners can scan an arbitrary number of items and conveyor belts, and scanned items don't need to be rescanned, only one scanner is needed.
+
+- **Decision:** Add 1 scanner to the submachine after the first, so that it scans items placed on the belt by the first submachine.
+
+#### Step 5: Conveyor Belts for Item Movement
+We need a conveyor belt to carry items through the machines. The conveyor belt for items will start at the machine with the funnel and extend through the submachines that handle pickers and trays.
+
+- **Decision:** Add one item conveyor belt spanning the entire packaging line, carrying the items through the submachines.
+
+#### Step 6: Submachine Allocation
+Each submachine can hold at most 4 robots. We need 4 pickers and 1 scanner. Given that a single submachine can hold 4 robots, we’ll need 2 submachines: one for the scanner and a few pickers, and another for the remaining pickers.
+
+- **Decision:** Use two submachines. The first submachine will have a funnel, 3 pickers, and the item conveyor belt. The second submachine will have the scanner and 1 picker.
+
+#### Step 7: Cost Calculation
+Now let's calculate the cost of this packaging line:
+
+- Base cost of the packaging line: 1000
+- Cost of two submachines: \( 500 \times 2 = 1000 \)
+- Cost of the item conveyor belt: The belt spans 2 submachines, so the cost is \( 50 + 5 \times 2 = 60 \).
+- Cost of the tray conveyor belt: Similarly, this belt also spans 2 submachines, so the cost is \( 50 + 5 \times 2 = 60 \).
+- Cost of 4 pickers: \( 100 \times 4 = 400 \)
+- Cost of 1 scanner: 3000
+- Cost of 1 funnel: 25
+
+**Total cost:** \( 1000 + 1000 + 60 + 60 + 400 + 3000 + 25 = 5545 \)
+
+#### Step 8: Plan Summary
+- Use 2 submachines.
+- Attach a funnel to the first submachine.
+- Use an item conveyor belt spanning both submachines.
+- Use a tray conveyor belt spanning both submachines.
+- Place 3 pickers in the first submachine.
+- Place 1 picker and 1 scanner in the second submachine.
+
+### Python Function Implementation
+
+Now let's implement the function according to the detailed plan:
+
+```python
+def create_packaging_line():
+    # Step 1: Create the packaging line with 2 submachines
+    packaging_line = PackagingLine(2)
+
+    # Step 2: Attach a funnel to the first submachine
+    packaging_line.submachines[0].attach_funnel()
+
+    # Step 3: Add an item conveyor belt spanning both submachines
+    packaging_line.add_conveyor_belt(0, 1, 'item')
+
+    # Step 4: Add a tray conveyor belt spanning both submachines
+    packaging_line.add_conveyor_belt(0, 1, 'tray')
+
+    # Step 5: Add 3 pickers to the first submachine (Submachine 0)
+    for _ in range(3):
+        packaging_line.submachines[0].add_packaging_robot('picker')
+
+    # Step 6: Add 1 picker to the second submachine (Submachine 1)
+    packaging_line.submachines[1].add_packaging_robot('picker')
+
+    # Step 7: Add 1 scanner to the second submachine (Submachine 1)
+    packaging_line.submachines[1].add_packaging_robot('scanner')
+
+    return packaging_line
+```
+
+This function follows the steps outlined in the plan and ensures that the packaging line is built with the lowest possible cost while meeting the requirement of packaging 100 items per unit of time.

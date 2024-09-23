@@ -106,47 +106,32 @@ def test_large() -> PackagingLine:
 
 
 def test_response() -> PackagingLine:
-    # Create a packaging line with 3 submachines
-    packaging_line = PackagingLine(3)
-    
-    # Attach the necessary funnels to input 100 items
-    total_items = 100
-    funnel_capacity = 100  # Each funnel can supply 100 items
-    submachine_index = 0  # Attach funnel to the first submachine
-    attached_funnels = 0
+    # Step 1: Create the packaging line with 2 submachines
+    packaging_line = PackagingLine(2)
 
-    # Attach funnel to the first submachine (since 1 funnel can handle 100 items)
-    if total_items > 0:
-        if packaging_line.submachines[submachine_index].attach_funnel():
-            attached_funnels += 1
+    # Step 2: Attach a funnel to the first submachine
+    packaging_line.submachines[0].attach_funnel()
 
-    # Attach an item belt from the first to the last machine (index 0 to 2)
-    packaging_line.add_conveyor_belt(0, 2, "item")
+    # Step 3: Add an item conveyor belt spanning both submachines
+    packaging_line.add_conveyor_belt(0, 1, 'item')
 
-    # Attach scanners to the second submachine (index 1) to scan all items
-    submachine_index = 1  # Attach scanners to the second submachine
-    packaging_line.submachines[submachine_index].add_packaging_robot("scanner")
+    # Step 4: Add a tray conveyor belt spanning both submachines
+    packaging_line.add_conveyor_belt(0, 1, 'tray')
 
-    # Attach pickers to the third submachine (index 2) to pick up all scanned items
-    submachine_index = 2  # Attach pickers to the third submachine
-    picker_capacity = 30  # Each picker can pick up to 30 items
-    pickers_needed = (total_items + picker_capacity - 1) // picker_capacity  # Round up
+    # Step 5: Add 3 pickers to the first submachine (Submachine 0)
+    for _ in range(3):
+        packaging_line.submachines[0].add_packaging_robot('picker')
 
-    for _ in range(pickers_needed):
-        packaging_line.submachines[submachine_index].add_packaging_robot("picker")
+    # Step 6: Add 1 picker to the second submachine (Submachine 1)
+    packaging_line.submachines[1].add_packaging_robot('picker')
 
-    # Compute how many trays are necessary to output all items
-    tray_capacity = 40  # Each tray can hold up to 40 items
-    trays_needed = (total_items + tray_capacity - 1) // tray_capacity  # Round up
-    conveyor_belt_capacity = 4  # Each conveyor belt can carry 4 trays
-    tray_belts_needed = (trays_needed + conveyor_belt_capacity - 1) // conveyor_belt_capacity  # Round up
-
-    # Attach the necessary tray conveyor belts from the second to the third submachine
-    packaging_line.add_conveyor_belt(1, 2, "tray")
+    # Step 7: Add 1 scanner to the second submachine (Submachine 1)
+    packaging_line.submachines[1].add_packaging_robot('scanner')
 
     return packaging_line
 
 
-line = test_small()
+
+line = test_response()
 print(line.throughput_string())
 print(line.cost_string())
