@@ -1,0 +1,70 @@
+Here is the Python function based on the API provided, ensuring the packaging line is designed to package exactly 100 items at the lowest possible cost:
+
+```python
+def create_packaging_line():
+    # Constants
+    ITEMS_TO_PACKAGE = 100
+    FUNNEL_CAPACITY = 100  # funnel supplies 100 items per unit of time
+    PICKER_CAPACITY = 30   # picker can pick up 30 items at a time
+    TRAY_CAPACITY = 40     # each tray holds 40 items
+    TRAY_BELT_CAPACITY = 4 # each tray belt carries 4 trays
+    
+    # Calculate the number of pickers and tray belts needed
+    num_trays_needed = (ITEMS_TO_PACKAGE + TRAY_CAPACITY - 1) // TRAY_CAPACITY
+    num_picker_robots = (ITEMS_TO_PACKAGE + PICKER_CAPACITY - 1) // PICKER_CAPACITY
+    num_tray_belts = (num_trays_needed + TRAY_BELT_CAPACITY - 1) // TRAY_BELT_CAPACITY
+    
+    # Each submachine can hold up to 4 robots
+    # We'll need at least one scanner and the necessary number of pickers, distributed across submachines
+    # To fit all, we need at least:
+    total_robots = num_picker_robots + 1  # +1 for the scanner
+    num_submachines = (total_robots + 3) // 4  # Each submachine can fit 4 robots max
+
+    # Initialize packaging line with the required number of submachines
+    packaging_line = PackagingLine(num_submachines)
+
+    # Track current machine and robot index for assigning robots
+    current_machine = 0
+    current_robot_slot = 0
+
+    # Attach a funnel to the first machine
+    packaging_line.submachines[current_machine].attach_funnel()
+
+    # Add robots: place scanner in the first machine, and distribute pickers in the available machines
+    # Add scanner (only one is needed)
+    packaging_line.submachines[current_machine].add_packaging_robot('scanner')
+    current_robot_slot += 1
+
+    # Add picker robots in the remaining available slots across submachines
+    for _ in range(num_picker_robots):
+        if current_robot_slot == 4:
+            current_machine += 1
+            current_robot_slot = 0
+        packaging_line.submachines[current_machine].add_packaging_robot('picker')
+        current_robot_slot += 1
+
+    # Add a conveyor belt for items from the first to the last submachine
+    packaging_line.add_conveyor_belt(0, num_submachines - 1, 'item')
+
+    # Distribute tray belts starting from the first machine without a funnel (machine 1 onward)
+    remaining_tray_belts = num_tray_belts
+    for i in range(1, num_submachines):
+        if remaining_tray_belts == 0:
+            break
+        packaging_line.add_conveyor_belt(i, i, 'tray')  # one tray belt per submachine
+        remaining_tray_belts -= 1
+
+    # Return the completed packaging line
+    return packaging_line
+```
+
+### Explanation:
+1. **Submachine count**: The number of submachines is determined by how many robots (pickers + scanner) are needed and the 4-robot-per-machine limit.
+2. **Pickers**: The number of pickers is calculated based on the 30-item limit each picker can handle.
+3. **Tray belts**: The number of tray belts is determined based on how many trays are required, and the belts' 4-tray capacity.
+4. **Submachine initialization**: A packaging line is initialized with the correct number of submachines.
+5. **Funnel attachment**: A funnel is attached to the first submachine.
+6. **Robot placement**: The scanner is placed first, followed by pickers, filling all available slots in a submachine before moving on to the next one.
+7. **Conveyor belts**: An item belt is added across all machines, and tray belts are added starting from the first machine without a funnel.
+
+This approach ensures the lowest possible cost while packaging 100 items efficiently.

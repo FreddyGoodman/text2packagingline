@@ -1,0 +1,80 @@
+Here's the Python function that creates the packaging line with the necessary capacity to package 100 items using the given API:
+
+```python
+def create_packaging_line():
+    import math
+    
+    # Step 1: Compute how many funnels are necessary
+    total_items = 100
+    funnel_capacity = 100
+    num_funnels = math.ceil(total_items / funnel_capacity)  # One funnel can input 100 items per unit of time
+
+    # Step 2: Compute how many scanners are needed
+    # Since one scanner can scan all belts in a submachine, we only need 1 scanner
+
+    num_scanners = 1  # A single scanner is sufficient for 100 items
+
+    # Step 3: Compute how many pickers are necessary
+    picker_capacity = 30
+    num_pickers = math.ceil(total_items / picker_capacity)  # Pickers place items on trays
+
+    # Step 4: Compute how many robots (scanners + pickers) and submachines are required
+    total_robots = num_scanners + num_pickers
+    robots_per_submachine = 4
+    num_submachines = math.ceil(total_robots / robots_per_submachine)  # A submachine can hold at most 4 robots
+
+    # Step 5: Plan the packaging line structure
+    # We will place 1 funnel in the first submachine to input items into the packaging line
+    # Then we will distribute the robots across the submachines
+
+    # Create a packaging line with the calculated number of submachines
+    packaging_line = PackagingLine(num_submachines)
+
+    # Attach the funnel to the first submachine
+    packaging_line.submachines[0].attach_funnel()
+
+    # Step 6: Add robots (scanners and pickers)
+    # Add 1 scanner to the first submachine (since only 1 scanner is needed for all belts)
+    packaging_line.submachines[0].add_packaging_robot("scanner")
+
+    # Add pickers to submachines
+    picker_count = 0
+    for submachine in packaging_line.submachines:
+        while picker_count < num_pickers and len(submachine.packaging_robots) < robots_per_submachine:
+            submachine.add_packaging_robot("picker")
+            picker_count += 1
+
+    # Step 7: Compute how many tray belts are needed to process all items
+    tray_capacity = 40  # One tray can hold 40 items
+    trays_per_belt = 4   # A tray belt carries 4 trays
+    belt_capacity = trays_per_belt * tray_capacity  # A tray belt can handle 160 items
+
+    num_tray_belts = math.ceil(total_items / belt_capacity)  # How many tray belts are needed for 100 items
+
+    # Step 8: Add tray belts and item belts to the submachines
+    # Since we have 1 conveyor belt for trays and 1 for items, connect all submachines
+    for i in range(num_tray_belts):
+        packaging_line.add_conveyor_belt(0, num_submachines - 1, "tray")  # Add tray belt connecting all submachines
+        packaging_line.add_conveyor_belt(0, num_submachines - 1, "item")  # Add item belt connecting all submachines
+
+    return packaging_line
+```
+
+### Explanation of the function:
+1. **Step 1**: We calculate the number of funnels needed by dividing the total number of items (100) by the capacity of a funnel (100). Since only one funnel can be attached to a submachine, this results in a single funnel being required.
+  
+2. **Step 2**: We determine that only one scanner is necessary, as a scanner can scan all conveyor belts in a submachine and the task is to package 100 items.
+
+3. **Step 3**: The number of pickers needed is calculated by dividing the total number of items by a picker's capacity (30 items). In this case, 4 pickers are required to handle 100 items.
+
+4. **Step 4**: We calculate how many submachines are necessary by distributing the robots (1 scanner + 4 pickers) across submachines, each of which can hold up to 4 robots.
+
+5. **Step 5**: The function creates a packaging line with the necessary number of submachines and attaches the funnel to the first submachine.
+
+6. **Step 6**: The scanner is added to the first submachine, and the pickers are added across the submachines until all 4 pickers are placed.
+
+7. **Step 7**: The number of tray belts is computed by dividing the total number of items (100) by the capacity of a tray belt (160). In this case, 1 tray belt is sufficient.
+
+8. **Step 8**: The function adds both the item and tray conveyor belts to connect all submachines in the packaging line.
+
+This code ensures the packaging line has the minimum cost structure while meeting the requirement of packaging 100 items.

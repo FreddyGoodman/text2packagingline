@@ -1,0 +1,52 @@
+To build a packaging line using the provided API and package 100 items with the lowest possible cost, we need to break down the problem and follow the instructions step by step. The goal is to compute the necessary number of components like funnels, scanners, pickers, and tray belts, ensuring that all items can be placed on trays.
+
+Here is a Python function that constructs the packaging line using the given functions:
+
+```python
+def create_packaging_line():
+    # Step 1: Create a packaging line with 3 submachines.
+    line = PackagingLine(3)
+
+    # Step 2: Attach 1 funnel to the first submachine to input 100 items.
+    items_per_funnel = 100  # Each funnel supplies 100 items per unit of time.
+    funnels_needed = 100 // items_per_funnel  # Only 1 funnel needed.
+    
+    if line.submachines[0].attach_funnel():
+        # Attach the funnel to the first submachine.
+        pass
+
+    # Step 3: Attach a scanner to the second submachine to scan all 100 items.
+    # Only 1 scanner is needed since it can scan an arbitrary amount of items.
+    line.submachines[1].add_packaging_robot("scanner")
+
+    # Step 4: Attach a picker to the second submachine.
+    # The picker can handle 30 items at a time, so we need ceil(100 / 30) = 4 pickers.
+    pickers_needed = (100 + 30 - 1) // 30  # Ceiling division.
+    for _ in range(min(pickers_needed, 4)):  # Submachines can only hold 4 robots.
+        line.submachines[1].add_packaging_robot("picker")
+
+    # Step 5: Add a conveyor belt for trays (starting from second submachine).
+    # Each tray belt carries 4 trays, and each tray can hold 40 items.
+    # Total trays needed = ceil(100 / 40) = 3 trays.
+    trays_needed = (100 + 40 - 1) // 40  # Ceiling division.
+    conveyor_belts_needed = (trays_needed + 4 - 1) // 4  # Ceiling division for trays per belt.
+    
+    for _ in range(min(conveyor_belts_needed, 3)):  # Submachines can only hold 3 belts.
+        line.add_conveyor_belt(1, 2, "tray")
+
+    # Step 6: Add a conveyor belt for items (spanning all submachines).
+    line.add_conveyor_belt(0, 2, "item")
+
+    # Return the configured packaging line.
+    return line
+```
+
+### Breakdown:
+1. **Submachine Creation**: The packaging line is initialized with 3 submachines.
+2. **Funnels**: Only one funnel is needed, as it can input 100 items, and it is attached to the first submachine.
+3. **Scanners**: A single scanner is attached to the second submachine because one scanner can scan all the items arriving on the conveyor belt.
+4. **Pickers**: We need 4 pickers to handle 100 items (since each picker can handle up to 30 items). These are added to the second submachine.
+5. **Tray Conveyor Belts**: To output all items on trays, we need 3 trays in total, but since a conveyor belt carries 4 trays at a time, only one tray conveyor belt is added between submachine 2 and submachine 3.
+6. **Item Conveyor Belt**: An item belt is added spanning from the first to the last submachine.
+
+This setup ensures that the system is capable of packaging all 100 items with the minimum cost.

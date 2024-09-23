@@ -1,0 +1,164 @@
+Given the functions:
+{
+    "functions": [
+        {
+            "name": "PackagingLine",
+            "description": "This constructor creates a new instance of a packaging line with a given amount of sub-machines.",
+            "arguments": [
+                {
+                    "name": "n",
+                    "description": "Amount of sub-machines to add to the packaging line.",
+                    "type": "number"
+                }
+            ],
+            "returns": {
+                "description": "Instance of the packaging line.",
+                "type": "PackagingLine"
+            }
+        },
+        {
+            "name": "add_conveyor_belt",
+            "description": "This method of the PackagingLine type adds a conveyor belt to the packaging line. The conveyor belt runs through the machines, giving all machines access to the contents of the conveyor belt. Sub-machines are zero-index from left to right.",
+            "arguments": [
+                {
+                    "name": "beginning",
+                    "description": "Index of the first sub-machine to connect the conveyor belt to.",
+                    "type": "number"
+                },
+                {
+                    "name": "end",
+                    "description": "Index of the last sub-machine to connect the conveyor belt to.",
+                    "type": "number"
+                },
+                {
+                    "name": "belt_type",
+                    "description": "Type of the conveyor belt to add. Currently the types 'item' and 'tray' are supported.",
+                    "type": "string"
+                }
+            ],
+            "returns": {
+                "description": "The amount of machines that had the conveyor belt connected to them.",
+                "type": "number"
+            }
+        },
+        {
+            "name": "add_packaging_robot",
+            "description": "This method of the SubMachine type adds a packaging robot to the sub-machine.",
+            "arguments": [
+                {
+                    "name": "machine_type",
+                    "description": "Type of the packaging machine to add. Currently the types 'picker' and 'scanner' are supported.",
+                    "type": "string"
+                }
+            ],
+            "returns": "void"
+        },
+        {
+            "name": "attach_funnel",
+            "description": "This method of the SubMachine type attaches a funnel to the sub-machine. The method checks if a funnel is already attached to the sub-machine. If a funnel is already attached, the mothod returns false, otherwise true.",
+            "returns": "bool"
+        }
+    ]
+}
+
+and the types:
+{
+    "types": {
+        "PackagingLine": {
+            "description": "A class that represents a packaging line.",
+            "properties": {
+                "submachines": {
+                    "description": "Array of packaging machines in the packaging line.",
+                    "type": "Array<SubMachines>"
+                },
+                "conveyor_belts": {
+                    "description": "Array of conveyor belts in the packaging line.",
+                    "type": "Array<ConveyorBelt>"
+                }
+            }
+        },
+        "SubMachine": {
+            "description": "A class that represents a sub-machine in a packaging line.",
+            "properties": {
+                "packaging_robots": {
+                    "description": "Array of packaging machines in the sub-machine.",
+                    "type": "Array<PackagingRobot>"
+                },
+                "funnel": {
+                    "description": "Boolean value that indicates if a funnel is attached to the sub-machine. Funnels are the only way to insert items into the packaging line.",
+                    "type": "bool"
+                }
+            }
+        },
+        "PackagingRobot": {
+            "description": "A class that represents a packaging robot in a sub-machine.",
+            "properties": {
+                "machine_type": {
+                    "description": "Type of the packaging machine.",
+                    "type": "string"
+                }
+            }
+        },
+        "ConveyorBelt": {
+            "description": "A class that represents a conveyor belt in a packaging line. A conveyor belt can either carry items or trays. If a conveyor belt carrys trays they don't have to be placed or picked up by a picker.",
+            "properties": {
+                "beginning": {
+                    "description": "Index of the first sub-machine the conveyor belt is connected to.",
+                    "type": "number"
+                },
+                "end": {
+                    "description": "Index of the last sub-machine the conveyor belt is connected to.",
+                    "type": "number"
+                },
+                "belt_type": {
+                    "description": "Type of the conveyor belt. Currently the types 'item' and 'tray' are supported.",
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
+
+and the facts:
+- The goal of the packaging line is to place items on trays.
+- A tray has a maximum capacity of 40 items.
+- A packaging line consists of submachines.
+- A submachine can contain different types of robots.
+- A submachine can contain at most 4 robots.
+- A submachine can contain conveyor belts.
+- A submachine can contain at most 3 conveyor belts.
+- Items are input into the packaging line using a funnel.
+- Only one funnel can be attached to a submachine.
+- A funnel supplies 100 items per unit of time.
+- Items and trays are moved by conveyor belts.
+- A conveyor belt can carry either items or trays.
+- A conveyor belt for trays carrys 4 trays.
+- Items are placed on trays by a robotic arm called the "picker".
+- The picker can pick up at most 30 items at a time.
+- The picker counts towards the robot limit in a submachine.
+- For a picker to pick up an item, the items position must be known.
+- To know the position of an item, the item must be scanned.
+- The machine that can scan items is called the "scanner".
+- The scanner can scan an arbitrary amount of items.
+- The scanner can only scan items that arriving on a conveyor belt.
+- The scanner can not scan items that are input in the same submachine as the scanner.
+- Once an item has been scanned, it does not have to be scanned ever again.
+- The scanner can scan all belts in a submachine.
+- The scanner counts towards the robot limit in a submachine.
+- For an item to be correctly placed on a tray, the submachine it is in must have an item belt, a tray belt and a picker with some picking capacity remaining.
+- All components of a packaging line have a cost.
+- The base cost of a packaging line is 1000.
+- The cost of a submachine is 500.
+- The base cost of a conveyor belt is 50.
+- For every submachine the conveyor belt is spanning, the cost is increased by 5.
+- The cost of a picker is 100.
+- The cost of a scanner is 3000.
+- The cost of a funnel is 25.
+
+Write a python function that only uses the given API to return a packaging line with enough capacity to package 100 items. The packaging line should have the lowest possible cost.
+Make sure to not implement any functions. Only use the given functions.
+
+To do this, first compute how many submachines are needed. There have to be enough submachines to fit all funnels, pickers and scanners. The required amount of each type should be inferred by the total amount of items the packging line is supposed to package.
+Then, initialize a packaging line with the required amount of submachines.
+Next, install the required robots in the submachines. Place all funnels before the first robot. Utilize all slots in a submachine before moving onto the next one.
+Finally, attach belts to the packaging line as needed. Do so by attaching a belt for items form the first to the last machine. Next, compute how many tray belts are necessary to fit enough trays to carry all items. Evenly distribute these tray belts over the submachines beginning from the first one without a funnel.

@@ -1,0 +1,36 @@
+Here's a Python function that creates a packaging line with the requirements mentioned, using only the provided API:
+
+```python
+def create_packaging_line():
+    # Create a packaging line with 3 sub-machines
+    packaging_line = PackagingLine(3)
+    
+    # Attach a funnel to the first submachine (index 0)
+    packaging_line.submachines[0].attach_funnel()
+    
+    # Add a scanner and three pickers to the second submachine (index 1)
+    packaging_line.submachines[1].add_packaging_robot("scanner")
+    packaging_line.submachines[1].add_packaging_robot("picker")
+    packaging_line.submachines[1].add_packaging_robot("picker")
+    packaging_line.submachines[1].add_packaging_robot("picker")
+    
+    # Add one picker to the third submachine (index 2)
+    packaging_line.submachines[2].add_packaging_robot("picker")
+    
+    # Add a conveyor belt for items from the first to the third submachine (index 0 to index 2)
+    packaging_line.add_conveyor_belt(0, 2, "item")
+    
+    # Add a conveyor belt for trays between the second and third submachines (index 1 to index 2)
+    packaging_line.add_conveyor_belt(1, 2, "tray")
+    
+    return packaging_line
+```
+
+### Explanation:
+1. **Create the packaging line**: We start by creating a packaging line with 3 submachines.
+2. **Attach the funnel**: The funnel is attached to the first submachine, which will supply items to the line.
+3. **Second submachine setup**: A scanner and three pickers are added to the second submachine to handle item scanning and picking.
+4. **Third submachine setup**: One picker is added to the third submachine to handle tray placement.
+5. **Add conveyor belts**: Two conveyor belts are added — one for items spanning from the first to the third submachine, and one for trays between the second and third submachine.
+
+This function fulfills the requirements and minimizes the cost based on the constraints provided.

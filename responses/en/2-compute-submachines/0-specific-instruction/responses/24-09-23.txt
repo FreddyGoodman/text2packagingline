@@ -1,0 +1,60 @@
+```python
+import math
+
+def create_packaging_line():
+    # Step 1: Calculate the number of funnels needed
+    total_items = 100
+    funnel_capacity = 100  # A funnel supplies 100 items per unit of time
+    funnels_needed = math.ceil(total_items / funnel_capacity)
+    
+    # Step 2: Calculate the number of scanners needed
+    # Scanners can scan all items, so only 1 scanner is needed
+    
+    scanners_needed = 1
+    
+    # Step 3: Calculate the number of pickers needed
+    picker_capacity = 30  # A picker can pick up 30 items at a time
+    pickers_needed = math.ceil(total_items / picker_capacity)
+    
+    # Step 4: Calculate the total number of robots (scanners + pickers)
+    total_robots = scanners_needed + pickers_needed
+    
+    # Step 5: Calculate the number of submachines needed
+    robots_per_submachine = 4  # Each submachine can house up to 4 robots
+    submachines_for_robots = math.ceil(total_robots / robots_per_submachine)
+    
+    # Step 6: Add the submachines needed for the funnels
+    submachines_needed = funnels_needed + submachines_for_robots
+    
+    # Step 7: Create the packaging line with the calculated number of submachines
+    packaging_line = PackagingLine(submachines_needed)
+    
+    # Step 8: Attach the required funnels to the first 'funnels_needed' submachines
+    for i in range(funnels_needed):
+        packaging_line.submachines[i].attach_funnel()
+    
+    # Step 9: Add the required robots to the submachines, starting after the last funnel
+    robot_index = funnels_needed
+    for _ in range(scanners_needed):
+        packaging_line.submachines[robot_index].add_packaging_robot("scanner")
+        robot_index += 1
+    
+    for _ in range(pickers_needed):
+        packaging_line.submachines[robot_index].add_packaging_robot("picker")
+        robot_index += 1
+    
+    # Step 10: Calculate the number of tray belts needed
+    tray_capacity_per_belt = 40 * 4  # 40 items per tray, 4 trays per belt
+    tray_belts_needed = math.ceil(total_items / tray_capacity_per_belt)
+    
+    # Step 11: Evenly distribute the tray belts across submachines starting from the second one
+    for i in range(tray_belts_needed):
+        packaging_line.add_conveyor_belt(i + 1, i + 1, "tray")
+    
+    # Step 12: Add an item belt from the first to the last submachine
+    packaging_line.add_conveyor_belt(0, submachines_needed - 1, "item")
+    
+    return packaging_line
+``` 
+
+This Python function uses the provided API to return a packaging line with enough capacity to package 100 items. It computes the necessary number of funnels, scanners, pickers, and submachines, and then distributes the conveyor belts and robots accordingly.

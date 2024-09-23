@@ -7,7 +7,7 @@ prompt_types = ["0-specific-instruction", "1-general-instruction"]
 # Define which language to use
 lang = "en"
 level = 3
-prompt_type = 1
+prompt_type = 0
 
 # Define the source folders
 folders = [f"./prompts/{lang}/{levels[level]}/{prompt_types[prompt_type]}/", "./functions-json/", "./types-json/", "./world-knowledge"]
