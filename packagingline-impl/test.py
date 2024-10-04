@@ -15,14 +15,14 @@ def test_small() -> PackagingLine:
     line.submachines[0].attach_funnel()
 
     line.submachines[1].add_packaging_robot("scanner")
-    line.submachines[1].add_packaging_robot("picker")
-    line.submachines[1].add_packaging_robot("picker")
-    line.submachines[1].add_packaging_robot("picker")
 
+    line.submachines[2].add_packaging_robot("picker")
+    line.submachines[2].add_packaging_robot("picker")
+    line.submachines[2].add_packaging_robot("picker")
     line.submachines[2].add_packaging_robot("picker")
 
     line.add_conveyor_belt(0, 2, "item")
-    line.add_conveyor_belt(1, 2, "tray")
+    line.add_conveyor_belt(2, 2, "tray")
 
     return line
 
@@ -134,7 +134,6 @@ def test_response() -> PackagingLine:
     return packaging_line
 
 
-
-line = test_response()
+line = test_small()
 print(line.throughput_string())
 print(line.cost_string())
