@@ -39,6 +39,7 @@ class SubMachine:
         self.packaging_robots.append(PackagingRobot(machine_type))
         self.robot_slots += -1
 
-    def attach_funnel(self) -> None:
+    def attach_funnel(self) -> bool:
         assert self.funnel == False
         self.funnel = True
+        return True
